@@ -37,18 +37,50 @@ RRP, refreshed once a day at ~12:00 UK time. Live at
 | American Golf | Partnerize |
 | GolfOnline | FlexOffers |
 | OnlineGolf | Partnerize |
+| Amazon UK | Amazon Associates (tag `golfballdeals-21`) — approved, but no live product feed yet; PA-API needs 3 sales in 180 days to unlock, so deals are sourced manually with tagged links in the meantime |
 
 One Awin publisher account covers the five Awin merchants above — apply to
 each individually from the Awin dashboard once approved. Partnerize and
 FlexOffers need separate accounts.
 
+### Awin application status (as of 31 Jul 2026)
+
+Awin publisher account approved — publisher ID `3013085`, datafeed API key
+obtained and stored as a GitHub secret. Individual merchant programme
+applications submitted, all still pending approval:
+
+| Advertiser | Awin advertiser ID | Feed available? |
+|---|---|---|
+| Scottsdale Golf | 813 | yes |
+| Clubhouse Golf | 39290 | yes |
+| Callaway Golf (brand direct) | 19186 | yes |
+| Affordable Golf | 82141 | yes |
+| Hot Golf UK | 76732 | yes |
+| Jam Golf (UK) | 7912 | **no** — Awin has no datafeed for this merchant even once approved |
+| Discount Golf Store | 10153 | **no** — same |
+| Major Golf Direct | 83219 | **no** — same |
+
+Applied to but out of scope for this site (not golf-ball retailers) —
+skip: Evelyn Gold (jewellery), Payntr Golf EU (golf shoes only).
+
+GolfSupport, Snainton Golf, and Sports Direct — three of the original
+target merchants — don't appear in the applications submitted so far;
+need to confirm whether those were applied to separately or still need
+applying to.
+
+Feed IDs (as opposed to advertiser IDs) aren't visible until each
+programme approves the application, so nothing here can be wired into
+`scripts/fetch-deals.js` yet — the daily manual-scan process covers the
+gap until approvals land.
+
 ## Setup: connecting the real feed
 
-1. Sign up for Awin, then Partnerize and FlexOffers separately.
+1. Sign up for Awin, then Partnerize and FlexOffers separately. *(done for
+   Awin — see status above)*
 2. Once approved on Awin, get a datafeed API key and a Feed ID per Awin
    merchant, then add these as GitHub repo secrets
    (Settings → Secrets and variables → Actions):
-   - `AWIN_DATAFEED_API_KEY`
+   - `AWIN_DATAFEED_API_KEY` *(already set)*
    - `AWIN_CLUBHOUSE_ID`, `AWIN_CLUBHOUSE_FEED_ID`
    - `AWIN_GOLFSUPPORT_ID`, `AWIN_GOLFSUPPORT_FEED_ID`
    - `AWIN_SNAINTON_ID`, `AWIN_SNAINTON_FEED_ID`
