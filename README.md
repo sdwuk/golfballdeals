@@ -139,6 +139,28 @@ Console. Since the homepage's deal content changes daily, the daily scan
 task refreshes `sitemap.xml`'s `<lastmod>` for `/` each run it makes a
 change — `changefreq` is set to `daily` accordingly.
 
+## Deal sourcing strategy
+
+Two kinds of listing appear on the site, both manually verified against the
+retailer's own product page (never a search-result summary):
+
+- **Discount deals** — a genuine current markdown (real crossed-out RRP,
+  lower current price). Shown with a red `-X%` badge.
+- **Best price found** — the current price for one of the most popular golf
+  ball models on the market, even when it isn't discounted right now. Shown
+  with a neutral "Best price found" tag instead of a discount badge, so it's
+  never confused with a real markdown.
+
+The target brand/model list is sourced from a credible published ranking —
+currently [MyGolfSpy's Nov 2025 reader survey of top golf ball brands](https://mygolfspy.com/news-opinion/survey-results-the-top-10-golf-ball-brands-of-2025/)
+(Titleist, Maxfli, Callaway, Srixon, TaylorMade, Vice, Costco/Kirkland,
+Bridgestone, Wilson, Mizuno, plus PXG/Legato/Snell/Seed/OnCore/Cut/Pinnacle/
+Volvik/Noodle as "other notables") — aiming for roughly 20 brands, ~20
+premium + ~20 budget models, expanding a few verified entries at a time via
+the daily scan rather than in one batch. Niche US direct-to-consumer brands
+(Maxfli, Kirkland, PXG, Legato, Snell, Seed, OnCore, Cut) may not have
+verifiable UK retail listings — they're skipped rather than guessed at.
+
 ## Setup: connecting the real feed
 
 1. Sign up for Awin, then Partnerize and FlexOffers separately. *(done for

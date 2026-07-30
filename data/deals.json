@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-30T19:30:00+01:00",
+  "lastUpdated": "2026-07-30T21:15:00+01:00",
   "isSampleData": false,
   "curationType": "manual",
   "deals": [
@@ -61,6 +61,34 @@
     },
     {
       "rank": 5,
+      "brand": "Mizuno",
+      "model": "RB Tour Golf Balls - White (Dozen)",
+      "site": "Clubhouse Golf",
+      "tier": "premium",
+      "price": 24.99,
+      "rrp": 44.99,
+      "discount": 44,
+      "url": "https://www.clubhousegolf.co.uk/acatalog/Mizuno-RB-Tour-Golf-Balls.html",
+      "boxImage": null,
+      "ballImage": null,
+      "merchantId": "clubhousegolf"
+    },
+    {
+      "rank": 6,
+      "brand": "Bridgestone",
+      "model": "e12 Contact Golf Balls - White (Dozen)",
+      "site": "Clubhouse Golf",
+      "tier": "budget",
+      "price": 21.99,
+      "rrp": 32.0,
+      "discount": 31,
+      "url": "https://www.clubhousegolf.co.uk/acatalog/Bridgestone-e12-Contact-Golf-Balls-White.html",
+      "boxImage": "https://www.clubhousegolf.co.uk/acatalog/2023e12contactballswhite1.jpg",
+      "ballImage": "https://www.clubhousegolf.co.uk/acatalog/2023e12contactballswhite2.jpg",
+      "merchantId": "clubhousegolf"
+    },
+    {
+      "rank": 7,
       "brand": "Volvik",
       "model": "Vivid XT Soft Golf Balls - Pink",
       "site": "GolfSupport",
@@ -74,7 +102,7 @@
       "merchantId": "golfsupport"
     },
     {
-      "rank": 6,
+      "rank": 8,
       "brand": "MacGregor",
       "model": "VIP Soft Golf Balls - White (Dozen)",
       "site": "GolfSupport",
@@ -88,7 +116,21 @@
       "merchantId": "golfsupport"
     },
     {
-      "rank": 7,
+      "rank": 9,
+      "brand": "Srixon",
+      "model": "Z-Star Diamond Golf Balls - White (Dozen)",
+      "site": "Clubhouse Golf",
+      "tier": "premium",
+      "price": 38.99,
+      "rrp": 48.99,
+      "discount": 20,
+      "url": "https://www.clubhousegolf.co.uk/acatalog/Srixon-Z-Star-Diamond-Golf-Balls-White.html",
+      "boxImage": "https://www.clubhousegolf.co.uk/acatalog/Srixon-2025-Z-Star-Diamond-Golf-Balls-White-1.jpg",
+      "ballImage": "https://www.clubhousegolf.co.uk/acatalog/Srixon-2025-Z-Star-Diamond-Golf-Balls-White-2.jpg",
+      "merchantId": "clubhousegolf"
+    },
+    {
+      "rank": 10,
       "brand": "Wilson",
       "model": "Duo Soft Golf Balls - White (Dozen)",
       "site": "GolfSupport",
@@ -102,7 +144,21 @@
       "merchantId": "golfsupport"
     },
     {
-      "rank": 8,
+      "rank": 11,
+      "brand": "Wilson",
+      "model": "Staff Model Golf Balls - White (Dozen)",
+      "site": "Clubhouse Golf",
+      "tier": "premium",
+      "price": 44.99,
+      "rrp": 52.99,
+      "discount": 15,
+      "url": "https://www.clubhousegolf.co.uk/acatalog/Wilson-Staff-Model-Golf-Balls-White.html",
+      "boxImage": "https://www.clubhousegolf.co.uk/acatalog/Wilson-2026-Staff-Model-Golf-Balls-White-1.jpg",
+      "ballImage": "https://www.clubhousegolf.co.uk/acatalog/Wilson-2026-Staff-Model-Golf-Balls-White-2.jpg",
+      "merchantId": "clubhousegolf"
+    },
+    {
+      "rank": 12,
       "brand": "Callaway",
       "model": "Supersoft Golf Balls - White (Dozen)",
       "site": "Clubhouse Golf",
@@ -116,7 +172,7 @@
       "merchantId": "clubhousegolf"
     },
     {
-      "rank": 9,
+      "rank": 13,
       "brand": "Callaway",
       "model": "Chrome Soft X LS Golf Balls (Dozen)",
       "site": "Snainton Golf",
@@ -130,7 +186,21 @@
       "merchantId": "snaintongolf"
     },
     {
-      "rank": 10,
+      "rank": 14,
+      "brand": "Bridgestone",
+      "model": "e6 Soft Golf Balls - White (Dozen)",
+      "site": "GolfSupport",
+      "tier": "budget",
+      "price": 19.99,
+      "rrp": 22.99,
+      "discount": 13,
+      "url": "https://golfsupport.com/bridgestone-e6-soft-golf-balls-white/",
+      "boxImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/5198/7841/1814067380E6WHITEBOX__29186.1704717462.jpg?c=1",
+      "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/5198/7835/5698887E62019_2__36718.1703776591.jpg?c=1",
+      "merchantId": "golfsupport"
+    },
+    {
+      "rank": 15,
       "brand": "Wilson",
       "model": "Ultra Distance Golf Balls - White (24-pack)",
       "site": "GolfSupport",
@@ -142,6 +212,34 @@
       "boxImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/8417/25053/589171710195848164524_Pack__08113.1704791087.jpg?c=1",
       "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/8417/25053/589171710195848164524_Pack__08113.1704791087.jpg?c=1",
       "merchantId": "golfsupport"
+    },
+    {
+      "rank": 16,
+      "brand": "Titleist",
+      "model": "Pro V1 Golf Balls - White (Dozen)",
+      "site": "Scottsdale Golf",
+      "tier": "premium",
+      "price": 52.0,
+      "rrp": 52.0,
+      "discount": 0,
+      "url": "https://www.scottsdalegolf.co.uk/shop/product/titleist-pro-v1-golf-balls-white-dozen",
+      "boxImage": "https://scottsdalegolf.b-cdn.net/storage/129535/conversions/titleist-prov1-3-preview.png",
+      "ballImage": "https://scottsdalegolf.b-cdn.net/storage/129536/conversions/titleist-prov1-1-preview.png",
+      "merchantId": "scottsdalegolf"
+    },
+    {
+      "rank": 17,
+      "brand": "Vice",
+      "model": "Vice Pro Golf Balls - White (Dozen)",
+      "site": "Vice Golf",
+      "tier": "premium",
+      "price": 42.99,
+      "rrp": 42.99,
+      "discount": 0,
+      "url": "https://www.vicegolf.co.uk/golf-balls/vice-golf-pro-white",
+      "boxImage": "https://cdn.shopify.com/s/files/1/0832/9235/6897/files/PDP_Pro_White_Dozen_Zoom.jpg?v=1709811015",
+      "ballImage": "https://cdn.shopify.com/s/files/1/0832/9235/6897/files/PDP_Pro_White_Front_Zoom.jpg?v=1709811015",
+      "merchantId": "vicegolf"
     }
   ]
 }
