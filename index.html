@@ -65,6 +65,11 @@
   .tier-pill{align-self:flex-start;font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:.2rem .55rem;border-radius:999px}
   .tier-pill.premium{background:#efe0b8;color:#7a5a12}
   .tier-pill.budget{background:#dfe9dd;color:#2c5b3f}
+  .tier-pill.featured{background:var(--brass);color:var(--pine-dark)}
+
+  .featured-section{margin-top:2.5rem;padding-top:1.75rem;border-top:1px solid var(--line)}
+  .featured-heading{font-size:1.1rem;margin:0 0 1rem}
+  .featured-grid{grid-template-columns:repeat(auto-fill,minmax(255px,320px))}
 
   .model{font-weight:600;font-size:.98rem;margin:0}
   .site-name{color:var(--muted);font-size:.83rem;margin:0}
@@ -104,6 +109,28 @@
 
   <div class="grid" id="deals-grid"></div>
 </main>
+
+<section class="featured-section" style="max-width:1100px;margin:0 auto;padding:0 1.5rem">
+  <h2 class="featured-heading brand-font">Featured deal</h2>
+  <div class="grid featured-grid">
+    <article class="card">
+      <span class="rank mono">&#9733;</span>
+      <div class="imgs">
+        <div class="img-slot"><img src="https://www.affordablegolf.co.uk/cdn/shop/files/ProV1WhiteHERO.jpg?v=1782293086" alt="Titleist Pro V1 Golf Balls box" loading="lazy"></div>
+        <div class="img-slot"><img src="https://www.affordablegolf.co.uk/cdn/shop/files/ProV1WhiteHERO.jpg?v=1782293086" alt="Titleist Pro V1 Golf Balls" loading="lazy"></div>
+      </div>
+      <div class="card-body">
+        <span class="tier-pill featured">Featured</span>
+        <p class="model brand-font">Titleist Pro V1 Golf Balls (12 Pack)</p>
+        <p class="site-name">Affordable Golf</p>
+        <div class="price-row">
+          <span class="price">&pound;49.99</span>
+        </div>
+        <a class="cta" href="https://sovrn.co/1i7v0w6" target="_blank" rel="nofollow sponsored noopener">View deal</a>
+      </div>
+    </article>
+  </div>
+</section>
 
 <footer>
   <div class="footer-inner">
