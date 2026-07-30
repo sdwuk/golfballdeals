@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GolfBallDeals.co.uk — Top 20 UK Golf Ball Deals</title>
+<meta name="description" content="The top 20 UK golf ball deals today, ranked by discount off RRP. Refreshed daily at noon.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#1f3a2e;
+    --pine-dark:#152820;
+    --brass:#c9a24b;
+    --brass-light:#e6c877;
+    --flag-red:#b6412e;
+    --cream:#f6f2e9;
+    --paper:#fffdf8;
+    --ink:#20291f;
+    --muted:#6b7367;
+    --line:#e3ddca;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:'Work Sans',system-ui,sans-serif;line-height:1.5}
+  h1,h2,.brand-font{font-family:'Fraunces',Georgia,serif}
+  .mono{font-family:'IBM Plex Mono',monospace}
+
+  header.site{background:var(--pine);color:var(--cream);padding:2.5rem 1.5rem 2rem}
+  .header-inner{max-width:1100px;margin:0 auto}
+  .site-title{font-size:2.1rem;font-weight:700;margin:0 0 .35rem;letter-spacing:-.01em;color:#fff}
+  .site-title span{color:var(--brass-light)}
+  .site-tagline{margin:0;color:#d7e0d5;font-size:1rem}
+  .site-meta{margin-top:1rem;font-size:.85rem;color:var(--brass-light)}
+
+  main{max-width:1100px;margin:0 auto;padding:1.75rem 1.5rem 4rem}
+
+  .tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+  .tab{border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:.5rem 1.1rem;border-radius:999px;font-weight:500;font-size:.9rem;cursor:pointer;transition:.15s}
+  .tab:hover{border-color:var(--brass)}
+  .tab.active{background:var(--pine);border-color:var(--pine);color:#fff}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:1rem}
+
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;position:relative}
+  .rank{position:absolute;top:.6rem;left:.6rem;background:var(--pine);color:#fff;width:1.8rem;height:1.8rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:.8rem;font-weight:600;z-index:2}
+
+  .imgs{display:flex;background:#eee7d4;height:150px}
+  .imgs .img-slot{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#eee7d4}
+  .imgs img{max-width:100%;max-height:100%;object-fit:contain}
+  .placeholder-ball{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #fff, #e3ddca 70%);border:1px solid #d8d0b8}
+
+  .card-body{padding:.9rem 1rem 1.05rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
+  .tier-pill{align-self:flex-start;font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:.2rem .55rem;border-radius:999px}
+  .tier-pill.premium{background:#efe0b8;color:#7a5a12}
+  .tier-pill.budget{background:#dfe9dd;color:#2c5b3f}
+
+  .model{font-weight:600;font-size:.98rem;margin:0}
+  .site-name{color:var(--muted);font-size:.83rem;margin:0}
+
+  .price-row{display:flex;align-items:baseline;gap:.5rem;margin-top:.2rem}
+  .price{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:1.15rem;color:var(--pine-dark)}
+  .rrp{font-family:'IBM Plex Mono',monospace;color:var(--muted);text-decoration:line-through;font-size:.85rem}
+  .discount{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--flag-red);font-size:.9rem}
+
+  .cta{margin-top:.6rem;display:inline-block;text-align:center;background:var(--brass);color:var(--pine-dark);text-decoration:none;font-weight:600;padding:.55rem 0;border-radius:8px;font-size:.9rem;transition:.15s}
+  .cta:hover{background:var(--brass-light)}
+
+  footer{background:var(--pine-dark);color:#c8d1c5;padding:2rem 1.5rem;margin-top:2rem}
+  .footer-inner{max-width:1100px;margin:0 auto;font-size:.85rem;display:flex;flex-wrap:wrap;gap:.4rem 1.5rem;justify-content:space-between;align-items:center}
+  footer a{color:var(--brass-light);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+
+  .empty{padding:3rem 1rem;text-align:center;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="header-inner">
+    <p class="site-title brand-font">GolfBall<span>Deals</span>.co.uk</p>
+    <p class="site-tagline">The UK's top 20 golf ball deals right now, ranked by discount off RRP.</p>
+    <p class="site-meta mono" id="last-updated">Loading latest prices…</p>
+  </div>
+</header>
+
+<main>
+  <div class="tabs" role="tablist" aria-label="Filter deals by tier">
+    <button class="tab active" data-filter="all">All</button>
+    <button class="tab" data-filter="premium">Premium</button>
+    <button class="tab" data-filter="budget">Budget</button>
+  </div>
+
+  <div class="grid" id="deals-grid"></div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span>&copy; <span id="year"></span> GolfBallDeals.co.uk — prices update daily, always confirm on the retailer's site before buying.</span>
+    <span><a href="privacy.html">Privacy &amp; affiliate disclosure</a></span>
+  </div>
+</footer>
+
+<script>
+// Embedded sample data — shown immediately so the page always renders
+// something, then overridden by ./data/deals.json if it's reachable.
+const SAMPLE_DATA = {
+  "lastUpdated": "2026-07-30T12:00:00+01:00",
+  "isSampleData": true,
+  "deals": [
+    {"rank":1,"brand":"Titleist","model":"Pro V1 (2024, Dozen)","site":"Clubhouse Golf","tier":"premium","price":34.99,"rrp":54.99,"discount":36,"url":"#","boxImage":null,"ballImage":null},
+    {"rank":2,"brand":"Srixon","model":"Z-Star (Dozen)","site":"Snainton Golf","tier":"premium","price":27.99,"rrp":44.99,"discount":38,"url":"#","boxImage":null,"ballImage":null},
+    {"rank":3,"brand":"Callaway","model":"Chrome Soft (Dozen)","site":"American Golf","tier":"premium","price":29.99,"rrp":47.99,"discount":37,"url":"#","boxImage":null,"ballImage":null},
+    {"rank":4,"brand":"Wilson","model":"Duo Soft+ (Dozen)","site":"GolfSupport","tier":"budget","price":12.99,"rrp":19.99,"discount":35,"url":"#","boxImage":null,"ballImage":null},
+    {"rank":5,"brand":"TaylorMade","model":"TP5 (Dozen)","site":"Scottsdale Golf","tier":"premium","price":32.99,"rrp":49.99,"discount":34,"url":"#","boxImage":null,"ballImage":null},
+    {"rank":6,"brand":"Dunlop","model":"Tour Distance (Dozen)","site":"GolfOnline","tier":"budget","price":9.99,"rrp":14.99,"discount":33,"url":"#","boxImage":null,"ballImage":null},
+    {"rank":7,"brand":"Bridgestone","model":"Tour B RX (Dozen)","site":"Clubhouse Golf","tier":"premium","price":30.99,"rrp":45.99,"discount":33,"url":"#","boxImage":null,"ballImage":null},
+    {"rank":8,"brand":"Titleist","model":"Tour Soft (Dozen)","site":"American Golf","tier":"premium","price":24.99,"rrp":36.99,"discount":32,"url":"#","boxImage":null,"ballImage":null},
+    {"rank":9,"brand":"Slazenger","model":"V300 (15 Ball Pack)","site":"Sports Direct","tier":"budget","price":8.99,"rrp":12.99,"discount":31,"url":"#","boxImage":null,"ballImage":null},
+    {"rank":10,"brand":"Callaway","model":"Supersoft (Dozen)","site":"OnlineGolf","tier":"budget","price":17.99,"rrp":25.99,"discount":31,"url":"#","boxImage":null,"ballImage":null},
+    {"rank":11,"brand":"Srixon","model":"Soft Feel (Dozen)","site":"GolfSupport","tier":"budget","price":14.99,"rrp":21.49,"discount":30,"url":"#","boxImage":null,"ballImage":null},
+    {"rank":12,"brand":"Vice","model":"Pro Plus (Dozen)","site":"Snainton Golf","tier":"premium","price":26.99,"rrp":37.99,"discount":29,"url":"#","boxImage":null,"ballImage":null},
+    {"rank":13,"brand":"TaylorMade","model":"Distance+ (Dozen)","site":"Scottsdale Golf","tier":"budget","price":11.99,"rrp":16.99,"discount":29,"url":"#","boxImage":null,"ballImage":null},
+    {"rank":14,"brand":"Titleist","model":"AVX (Dozen)","site":"Clubhouse Golf","tier":"premium","price":33.99,"rrp":47.99,"discount":29,"url":"#","boxImage":null,"ballImage":null},
+    {"rank":15,"brand":"Pinnacle","model":"Rush (15 Ball Pack)","site":"GolfOnline","tier":"budget","price":7.99,"rrp":10.99,"discount":27,"url":"#","boxImage":null,"ballImage":null},
+    {"rank":16,"brand":"Callaway","model":"Chrome Tour (Dozen)","site":"American Golf","tier":"premium","price":31.99,"rrp":43.99,"discount":27,"url":"#","boxImage":null,"ballImage":null},
+    {"rank":17,"brand":"Wilson","model":"Staff Model (Dozen)","site":"OnlineGolf","tier":"premium","price":27.99,"rrp":37.99,"discount":26,"url":"#","boxImage":null,"ballImage":null},
+    {"rank":18,"brand":"Dunlop","model":"65 (15 Ball Pack)","site":"Sports Direct","tier":"budget","price":6.99,"rrp":9.49,"discount":26,"url":"#","boxImage":null,"ballImage":null},
+    {"rank":19,"brand":"Mizuno","model":"RB Tour (Dozen)","site":"GolfSupport","tier":"premium","price":28.99,"rrp":38.99,"discount":26,"url":"#","boxImage":null,"ballImage":null},
+    {"rank":20,"brand":"Srixon","model":"Distance (Dozen)","site":"Snainton Golf","tier":"budget","price":13.99,"rrp":18.49,"discount":24,"url":"#","boxImage":null,"ballImage":null}
+  ]
+};
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+let currentData = SAMPLE_DATA;
+let currentFilter = 'all';
+
+function formatUpdated(iso, isSample){
+  const d = new Date(iso);
+  const stamp = d.toLocaleString('en-GB', { day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit', timeZone:'Europe/London' });
+  return isSample ? `Sample data shown — live feed not connected yet (as of ${stamp})` : `Updated ${stamp} UK time`;
+}
+
+function imgSlot(src, alt){
+  if(src){
+    return `<div class="img-slot"><img src="${src}" alt="${alt}" loading="lazy"></div>`;
+  }
+  return `<div class="img-slot"><div class="placeholder-ball" aria-hidden="true"></div></div>`;
+}
+
+function cardHTML(d){
+  return `
+    <article class="card" data-tier="${d.tier}">
+      <span class="rank mono">${d.rank}</span>
+      <div class="imgs">
+        ${imgSlot(d.boxImage, d.brand + ' ' + d.model + ' box')}
+        ${imgSlot(d.ballImage, d.brand + ' ' + d.model + ' ball')}
+      </div>
+      <div class="card-body">
+        <span class="tier-pill ${d.tier}">${d.tier}</span>
+        <p class="model brand-font">${d.brand} ${d.model}</p>
+        <p class="site-name">${d.site}</p>
+        <div class="price-row">
+          <span class="price">£${d.price.toFixed(2)}</span>
+          <span class="rrp">£${d.rrp.toFixed(2)}</span>
+          <span class="discount">-${d.discount}%</span>
+        </div>
+        <a class="cta" href="${d.url}" target="_blank" rel="nofollow sponsored noopener">View deal</a>
+      </div>
+    </article>`;
+}
+
+function render(){
+  const grid = document.getElementById('deals-grid');
+  const deals = currentData.deals.filter(d => currentFilter === 'all' || d.tier === currentFilter);
+  grid.innerHTML = deals.length
+    ? deals.map(cardHTML).join('')
+    : `<div class="empty">No deals in this category right now.</div>`;
+  document.getElementById('last-updated').textContent = formatUpdated(currentData.lastUpdated, currentData.isSampleData);
+}
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentFilter = tab.dataset.filter;
+    render();
+  });
+});
+
+render();
+
+fetch('./data/deals.json', { cache: 'no-store' })
+  .then(r => r.ok ? r.json() : Promise.reject())
+  .then(json => {
+    if (json && Array.isArray(json.deals)) {
+      currentData = json;
+      render();
+    }
+  })
+  .catch(() => { /* keep sample data — feed not reachable yet */ });
+</script>
+
+</body>
+</html>
