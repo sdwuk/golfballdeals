@@ -131,14 +131,14 @@
       "position": 5,
       "item": {
         "@type": "Product",
-        "name": "Mizuno RB Tour Golf Balls - White",
+        "name": "Mizuno RB Tour X Golf Balls - White",
         "brand": {
           "@type": "Brand",
           "name": "Mizuno"
         },
         "offers": {
           "@type": "Offer",
-          "url": "https://www.clubhousegolf.co.uk/acatalog/Mizuno-RB-Tour-Golf-Balls.html",
+          "url": "https://www.clubhousegolf.co.uk/acatalog/Mizuno-RB-Tour-X-Golf-Balls.html",
           "priceCurrency": "GBP",
           "price": "24.99",
           "availability": "https://schema.org/InStock",
@@ -416,7 +416,7 @@
           "@type": "Offer",
           "url": "https://www.scottsdalegolf.co.uk/shop/product/titleist-pro-v1-golf-balls-white-dozen",
           "priceCurrency": "GBP",
-          "price": "52.00",
+          "price": "49.99",
           "availability": "https://schema.org/InStock",
           "seller": {
             "@type": "Organization",
@@ -605,19 +605,21 @@
 
 <main>
   <div class="filters">
-    <div class="filter-group" id="tier-filters" role="group" aria-label="Filter by category">
-      <span class="filter-label mono">SHOW</span>
+    <div class="filter-group" id="tier-filters" role="group" aria-label="Filter by type">
+      <span class="filter-label mono">TYPE</span>
       <button class="pill-toggle active" data-tier="featured">Featured</button>
       <button class="pill-toggle active" data-tier="premium">Premium</button>
       <button class="pill-toggle active" data-tier="budget">Budget</button>
-      <button class="pill-toggle active" data-tier="amazon">Amazon</button>
+    </div>
+    <div class="filter-group" id="store-filters" role="group" aria-label="Filter by store">
+      <span class="filter-label mono">STORE</span>
     </div>
     <div class="filter-group" id="brand-filters" role="group" aria-label="Filter by brand">
       <span class="filter-label mono">BRAND</span>
     </div>
   </div>
 
-  <p class="intro-copy">We track live UK prices across GolfSupport, Clubhouse Golf, Scottsdale Golf, Snainton Golf, Vice Golf and Amazon UK to find the best current price on popular golf balls from Titleist, Callaway, TaylorMade, Srixon, Bridgestone, Wilson, Mizuno and Vice. Genuine markdowns get a discount badge; everyday best-price picks are flagged too, so you always know what you're looking at.</p>
+  <p class="intro-copy">We track the best UK deals on Golf Balls across popular stores such as GolfSupport, Clubhouse Golf, Scottsdale Golf, Snainton Golf, Vice Golf and Amazon UK. See deals on Titleist, Callaway, TaylorMade, Srixon, Bridgestone, Wilson, Mizuno, Vice and more. Genuine discounts are flagged and best-prices are too, so you always know what you're looking at.</p>
 
   <div class="grid" id="deals-grid"></div>
 </main>
@@ -651,7 +653,7 @@
 // data/deals.json — real prices, checked by hand against each retailer's
 // site, not yet pulled from an automated affiliate feed.
 const SAMPLE_DATA = {
-  "lastUpdated": "2026-07-30T22:10:00+01:00",
+  "lastUpdated": "2026-07-30T19:43:39+01:00",
   "isSampleData": false,
   "curationType": "manual",
   "deals": [
@@ -718,14 +720,14 @@ const SAMPLE_DATA = {
     {
       "rank": 5,
       "brand": "Mizuno",
-      "model": "RB Tour Golf Balls - White",
+      "model": "RB Tour X Golf Balls - White",
       "site": "Clubhouse Golf",
       "tier": "premium",
       "price": 24.99,
       "rrp": 44.99,
       "discount": 44,
-      "url": "https://www.clubhousegolf.co.uk/acatalog/Mizuno-RB-Tour-Golf-Balls.html",
-      "boxImage": null,
+      "url": "https://www.clubhousegolf.co.uk/acatalog/Mizuno-RB-Tour-X-Golf-Balls.html",
+      "boxImage": "https://www.clubhousegolf.co.uk/acatalog/Mizuno-2023-RB-X-Tour-Golf-Ball-White-1.jpg",
       "ballImage": null,
       "merchantId": "clubhousegolf",
       "featured": false
@@ -890,7 +892,7 @@ const SAMPLE_DATA = {
       "rrp": 52.0,
       "discount": 4,
       "url": "https://www.amazon.co.uk/dp/B0DPN7QZ9R?tag=golfballdeals-21",
-      "boxImage": null,
+      "boxImage": "https://m.media-amazon.com/images/I/61H+HnVHvdL._AC_SX679_.jpg",
       "ballImage": null,
       "merchantId": "amazon",
       "featured": false
@@ -901,9 +903,9 @@ const SAMPLE_DATA = {
       "model": "Pro V1 Golf Balls - White",
       "site": "Scottsdale Golf",
       "tier": "premium",
-      "price": 52.0,
+      "price": 49.99,
       "rrp": 52.0,
-      "discount": 0,
+      "discount": 4,
       "url": "https://www.scottsdalegolf.co.uk/shop/product/titleist-pro-v1-golf-balls-white-dozen",
       "boxImage": "https://scottsdalegolf.b-cdn.net/storage/129535/conversions/titleist-prov1-3-preview.png",
       "ballImage": "https://scottsdalegolf.b-cdn.net/storage/129536/conversions/titleist-prov1-1-preview.png",
@@ -946,8 +948,9 @@ const SAMPLE_DATA = {
 document.getElementById('year').textContent = new Date().getFullYear();
 
 let currentData = SAMPLE_DATA;
-let activeTiers = new Set(['featured','premium','budget','amazon']);
+let activeTiers = new Set(['featured','premium','budget']);
 let activeBrands = null; // null until first data load, then Set of brand names
+let activeStores = null; // null until first data load, then Set of site names
 let merchantsData = null;
 
 // --- Affiliate link resolution -------------------------------------------
@@ -1010,7 +1013,7 @@ function formatUpdated(data){
 
 function imgSlot(src, alt){
   if(src){
-    return `<div class="img-slot"><img src="${src}" alt="${alt}" loading="lazy"></div>`;
+    return `<div class="img-slot"><img src="${src}" alt="${alt}" loading="lazy" referrerpolicy="no-referrer"></div>`;
   }
   return `<div class="img-slot"><div class="placeholder-ball" aria-hidden="true"></div></div>`;
 }
@@ -1047,8 +1050,8 @@ function render(){
   const grid = document.getElementById('deals-grid');
   const deals = currentData.deals.filter(d => {
     if (activeBrands !== null && !activeBrands.has(d.brand)) return false;
+    if (activeStores !== null && !activeStores.has(d.site)) return false;
     if (d.featured) return activeTiers.has('featured');
-    if (d.merchantId === 'amazon') return activeTiers.has('amazon');
     return activeTiers.has(d.tier);
   });
   // Featured entries always pin to the top-left, regardless of sort/filter order.
@@ -1076,6 +1079,32 @@ function renderBrandFilters(){
         btn.classList.remove('active');
       }else{
         activeBrands.add(brand);
+        btn.classList.add('active');
+      }
+      render();
+    });
+    wrap.appendChild(btn);
+  });
+}
+
+function renderStoreFilters(){
+  const wrap = document.getElementById('store-filters');
+  const stores = [...new Set(currentData.deals.map(d => d.site))].sort();
+  if(activeStores === null){
+    activeStores = new Set(stores);
+  }
+  wrap.querySelectorAll('.pill-toggle').forEach(b => b.remove());
+  stores.forEach(store => {
+    const btn = document.createElement('button');
+    btn.className = 'pill-toggle' + (activeStores.has(store) ? ' active' : '');
+    btn.textContent = store;
+    btn.dataset.store = store;
+    btn.addEventListener('click', () => {
+      if(activeStores.has(store)){
+        activeStores.delete(store);
+        btn.classList.remove('active');
+      }else{
+        activeStores.add(store);
         btn.classList.add('active');
       }
       render();
@@ -1127,6 +1156,7 @@ document.querySelectorAll('#tier-filters .pill-toggle').forEach(btn => {
 });
 
 renderBrandFilters();
+renderStoreFilters();
 render();
 updateCountdown();
 setInterval(updateCountdown, 1000);
@@ -1138,10 +1168,12 @@ Promise.all([
   if (deals && Array.isArray(deals.deals)) {
     currentData = deals;
     activeBrands = null; // re-derive brand list from fresh data
+    activeStores = null; // re-derive store list from fresh data
   }
   if (merchants) merchantsData = merchants;
   if (deals || merchants) {
     renderBrandFilters();
+    renderStoreFilters();
     render();
   }
 });
