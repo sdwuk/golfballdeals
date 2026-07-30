@@ -15,7 +15,8 @@
       "url": "https://golfsupport.com/pinnacle-rush-golf-balls-white/",
       "boxImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/5066/40368/71Pb_DQ-s6L._AC_SX679___09101.1777965122.jpg?c=1",
       "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/5066/40366/71jyOcBG3kL._AC_SX679___04050.1777965121.jpg?c=1",
-      "merchantId": "golfsupport"
+      "merchantId": "golfsupport",
+      "featured": false
     },
     {
       "rank": 2,
@@ -29,7 +30,8 @@
       "url": "https://golfsupport.com/bridgestone-tour-b-rx-white/",
       "boxImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/11575/32369/BRI22D0104002___L__18100.1718863289.jpg?c=1",
       "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/11575/32244/1708762342tourbxsballs__38271.1704717462.1280.1280__14642.1711380491.1280.1280__22575.1718705274.jpg?c=1",
-      "merchantId": "golfsupport"
+      "merchantId": "golfsupport",
+      "featured": false
     },
     {
       "rank": 3,
@@ -43,7 +45,8 @@
       "url": "https://golfsupport.com/pinnacle-rush-golf-balls-yellow/",
       "boxImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/10829/30691/1334505924PinnacleRush_Yellow__80712.1704717435.1280.1280__46818.1714745969.jpg?c=1",
       "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/10829/30691/1334505924PinnacleRush_Yellow__80712.1704717435.1280.1280__46818.1714745969.jpg?c=1",
-      "merchantId": "golfsupport"
+      "merchantId": "golfsupport",
+      "featured": false
     },
     {
       "rank": 4,
@@ -57,7 +60,8 @@
       "url": "https://www.clubhousegolf.co.uk/acatalog/Bridgestone-2023-Tour-B-RX-Golf-Balls-White.html",
       "boxImage": "https://www.clubhousegolf.co.uk/acatalog/300_85_Bridgestone-Tour-B-RX-Golf-Balls-White-1_Alt_103826.jpg",
       "ballImage": "https://www.clubhousegolf.co.uk/acatalog/300_85_Bridgestone-Tour-B-RX-Golf-Balls-White-1_Alt_103826.jpg",
-      "merchantId": "clubhousegolf"
+      "merchantId": "clubhousegolf",
+      "featured": false
     },
     {
       "rank": 5,
@@ -71,7 +75,8 @@
       "url": "https://www.clubhousegolf.co.uk/acatalog/Mizuno-RB-Tour-Golf-Balls.html",
       "boxImage": null,
       "ballImage": null,
-      "merchantId": "clubhousegolf"
+      "merchantId": "clubhousegolf",
+      "featured": false
     },
     {
       "rank": 6,
@@ -85,7 +90,8 @@
       "url": "https://www.clubhousegolf.co.uk/acatalog/Bridgestone-e12-Contact-Golf-Balls-White.html",
       "boxImage": "https://www.clubhousegolf.co.uk/acatalog/2023e12contactballswhite1.jpg",
       "ballImage": "https://www.clubhousegolf.co.uk/acatalog/2023e12contactballswhite2.jpg",
-      "merchantId": "clubhousegolf"
+      "merchantId": "clubhousegolf",
+      "featured": false
     },
     {
       "rank": 7,
@@ -99,7 +105,8 @@
       "url": "https://golfsupport.com/volvik-vivid-xt-soft-golf-balls-pink/",
       "boxImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/12743/37347/71UCt_HvZ6L._AC_SX425___02066.1751282364.jpg?c=1",
       "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/12743/37346/51qH1WUn8AL._AC_SX425___29406.1751282364.jpg?c=1",
-      "merchantId": "golfsupport"
+      "merchantId": "golfsupport",
+      "featured": false
     },
     {
       "rank": 8,
@@ -113,7 +120,8 @@
       "url": "https://golfsupport.com/macgregor-vip-soft-golf-balls-white/",
       "boxImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/6128/13792/270035519VIPWHITE__88441.1704718134.jpg?c=1",
       "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/6128/13791/1098315346VIPWHITEBALL__09327.1703780356.jpg?c=1",
-      "merchantId": "golfsupport"
+      "merchantId": "golfsupport",
+      "featured": false
     },
     {
       "rank": 9,
@@ -127,7 +135,8 @@
       "url": "https://www.clubhousegolf.co.uk/acatalog/Srixon-Z-Star-Diamond-Golf-Balls-White.html",
       "boxImage": "https://www.clubhousegolf.co.uk/acatalog/Srixon-2025-Z-Star-Diamond-Golf-Balls-White-1.jpg",
       "ballImage": "https://www.clubhousegolf.co.uk/acatalog/Srixon-2025-Z-Star-Diamond-Golf-Balls-White-2.jpg",
-      "merchantId": "clubhousegolf"
+      "merchantId": "clubhousegolf",
+      "featured": false
     },
     {
       "rank": 10,
@@ -141,7 +150,8 @@
       "url": "https://golfsupport.com/wilson-duo-soft-golf-balls-white/",
       "boxImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/5655/10852/1871564683WG2006119_0_Duo_Soft_Standard_Ball_12PK_Vert_RT_Hero__29755.1704717906.png?c=1",
       "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/5655/10851/427900679WG2006118_3_Duo_Soft_BallStamp__40329.1703778461.png?c=1",
-      "merchantId": "golfsupport"
+      "merchantId": "golfsupport",
+      "featured": false
     },
     {
       "rank": 11,
@@ -155,7 +165,8 @@
       "url": "https://www.clubhousegolf.co.uk/acatalog/Wilson-Staff-Model-Golf-Balls-White.html",
       "boxImage": "https://www.clubhousegolf.co.uk/acatalog/Wilson-2026-Staff-Model-Golf-Balls-White-1.jpg",
       "ballImage": "https://www.clubhousegolf.co.uk/acatalog/Wilson-2026-Staff-Model-Golf-Balls-White-2.jpg",
-      "merchantId": "clubhousegolf"
+      "merchantId": "clubhousegolf",
+      "featured": false
     },
     {
       "rank": 12,
@@ -169,7 +180,8 @@
       "url": "https://www.clubhousegolf.co.uk/acatalog/Callaway-Supersoft-Golf-Balls-White.html",
       "boxImage": "https://www.clubhousegolf.co.uk/acatalog/300_85_Callaway-2025-Supersoft-Golf-Balls-White-alt_119235.jpg",
       "ballImage": "https://www.clubhousegolf.co.uk/acatalog/300_85_Callaway-2025-Supersoft-Golf-Balls-White-alt_119235.jpg",
-      "merchantId": "clubhousegolf"
+      "merchantId": "clubhousegolf",
+      "featured": false
     },
     {
       "rank": 13,
@@ -183,7 +195,8 @@
       "url": "https://www.snaintongolf.co.uk/callaway-chrome-soft-x-ls-golf-balls",
       "boxImage": "https://www.snaintongolf.co.uk/media/catalog/product/cache/6517c62f5899ad6aa0ba23ceb3eeff97/c/a/callaway-2021-chrome-soft-x-ls-golf-balls-packaging.jpg",
       "ballImage": "https://www.snaintongolf.co.uk/media/catalog/product/c/a/callaway-2021-chrome-soft-x-ls-golf-ball-front.jpg",
-      "merchantId": "snaintongolf"
+      "merchantId": "snaintongolf",
+      "featured": false
     },
     {
       "rank": 14,
@@ -197,7 +210,8 @@
       "url": "https://golfsupport.com/bridgestone-e6-soft-golf-balls-white/",
       "boxImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/5198/7841/1814067380E6WHITEBOX__29186.1704717462.jpg?c=1",
       "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/5198/7835/5698887E62019_2__36718.1703776591.jpg?c=1",
-      "merchantId": "golfsupport"
+      "merchantId": "golfsupport",
+      "featured": false
     },
     {
       "rank": 15,
@@ -211,7 +225,8 @@
       "url": "https://golfsupport.com/wilson-ultra-distance-golf-balls-white-24-pack/",
       "boxImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/8417/25053/589171710195848164524_Pack__08113.1704791087.jpg?c=1",
       "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/8417/25053/589171710195848164524_Pack__08113.1704791087.jpg?c=1",
-      "merchantId": "golfsupport"
+      "merchantId": "golfsupport",
+      "featured": false
     },
     {
       "rank": 16,
@@ -225,7 +240,8 @@
       "url": "https://www.amazon.co.uk/dp/B0DPN7QZ9R?tag=golfballdeals-21",
       "boxImage": null,
       "ballImage": null,
-      "merchantId": "amazon"
+      "merchantId": "amazon",
+      "featured": false
     },
     {
       "rank": 17,
@@ -239,7 +255,8 @@
       "url": "https://www.scottsdalegolf.co.uk/shop/product/titleist-pro-v1-golf-balls-white-dozen",
       "boxImage": "https://scottsdalegolf.b-cdn.net/storage/129535/conversions/titleist-prov1-3-preview.png",
       "ballImage": "https://scottsdalegolf.b-cdn.net/storage/129536/conversions/titleist-prov1-1-preview.png",
-      "merchantId": "scottsdalegolf"
+      "merchantId": "scottsdalegolf",
+      "featured": false
     },
     {
       "rank": 18,
@@ -253,7 +270,23 @@
       "url": "https://www.vicegolf.co.uk/golf-balls/vice-golf-pro-white",
       "boxImage": "https://cdn.shopify.com/s/files/1/0832/9235/6897/files/PDP_Pro_White_Dozen_Zoom.jpg?v=1709811015",
       "ballImage": "https://cdn.shopify.com/s/files/1/0832/9235/6897/files/PDP_Pro_White_Front_Zoom.jpg?v=1709811015",
-      "merchantId": "vicegolf"
+      "merchantId": "vicegolf",
+      "featured": false
+    },
+    {
+      "rank": 19,
+      "brand": "Titleist",
+      "model": "Pro V1 Golf Balls (12 Pack)",
+      "site": "Affordable Golf",
+      "tier": "premium",
+      "price": 49.99,
+      "rrp": 49.99,
+      "discount": 0,
+      "url": "https://sovrn.co/1i7v0w6",
+      "boxImage": "https://www.affordablegolf.co.uk/cdn/shop/files/ProV1WhiteHERO.jpg?v=1782293086",
+      "ballImage": "https://www.affordablegolf.co.uk/cdn/shop/files/ProV1WhiteHERO.jpg?v=1782293086",
+      "merchantId": "affordablegolf",
+      "featured": true
     }
   ]
 }

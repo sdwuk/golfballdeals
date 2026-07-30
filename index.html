@@ -61,7 +61,6 @@
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:1rem}
 
   .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;position:relative}
-  .rank{position:absolute;top:.6rem;left:.6rem;background:var(--pine);color:#fff;width:1.8rem;height:1.8rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:.8rem;font-weight:600;z-index:2}
 
   .imgs{display:flex;background:#fff;height:150px;border-bottom:1px solid var(--line)}
   .imgs .img-slot{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff}
@@ -73,6 +72,8 @@
   .tier-pill.premium{background:#efe0b8;color:#7a5a12}
   .tier-pill.budget{background:#dfe9dd;color:#2c5b3f}
   .tier-pill.featured{background:var(--brass);color:var(--pine-dark)}
+  .pill-row{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
+  .brand-pill{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:.2rem .55rem;border-radius:999px;background:var(--paper);color:var(--muted);border:1px solid var(--line)}
 
   .featured-section{margin-top:2.5rem;padding-top:1.75rem;border-top:1px solid var(--line)}
   .featured-heading{font-size:1.1rem;margin:0 0 1rem}
@@ -110,8 +111,9 @@
 
 <main>
   <div class="filters">
-    <div class="filter-group" id="tier-filters" role="group" aria-label="Filter by tier">
-      <span class="filter-label mono">TIER</span>
+    <div class="filter-group" id="tier-filters" role="group" aria-label="Filter by category">
+      <span class="filter-label mono">SHOW</span>
+      <button class="pill-toggle active" data-tier="featured">Featured</button>
       <button class="pill-toggle active" data-tier="premium">Premium</button>
       <button class="pill-toggle active" data-tier="budget">Budget</button>
     </div>
@@ -122,28 +124,6 @@
 
   <div class="grid" id="deals-grid"></div>
 </main>
-
-<section class="featured-section" style="max-width:1100px;margin:0 auto;padding:0 1.5rem">
-  <h2 class="featured-heading brand-font">Featured deal</h2>
-  <div class="grid featured-grid">
-    <article class="card">
-      <span class="rank mono">&#9733;</span>
-      <div class="imgs">
-        <div class="img-slot"><img src="https://www.affordablegolf.co.uk/cdn/shop/files/ProV1WhiteHERO.jpg?v=1782293086" alt="Titleist Pro V1 Golf Balls box" loading="lazy"></div>
-        <div class="img-slot"><img src="https://www.affordablegolf.co.uk/cdn/shop/files/ProV1WhiteHERO.jpg?v=1782293086" alt="Titleist Pro V1 Golf Balls" loading="lazy"></div>
-      </div>
-      <div class="card-body">
-        <span class="tier-pill featured">Featured</span>
-        <p class="model brand-font">Titleist Pro V1 Golf Balls (12 Pack)</p>
-        <p class="site-name">Affordable Golf</p>
-        <div class="price-row">
-          <span class="price">&pound;49.99</span>
-        </div>
-        <a class="cta" href="https://sovrn.co/1i7v0w6" target="_blank" rel="nofollow sponsored noopener">View deal</a>
-      </div>
-    </article>
-  </div>
-</section>
 
 <section class="featured-section" id="amazon-section" style="max-width:1100px;margin:0 auto;padding:0 1.5rem;display:none">
   <h2 class="featured-heading brand-font">Golf Ball Deals on Amazon</h2>
@@ -179,7 +159,8 @@ const SAMPLE_DATA = {
       "url": "https://golfsupport.com/pinnacle-rush-golf-balls-white/",
       "boxImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/5066/40368/71Pb_DQ-s6L._AC_SX679___09101.1777965122.jpg?c=1",
       "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/5066/40366/71jyOcBG3kL._AC_SX679___04050.1777965121.jpg?c=1",
-      "merchantId": "golfsupport"
+      "merchantId": "golfsupport",
+      "featured": false
     },
     {
       "rank": 2,
@@ -193,7 +174,8 @@ const SAMPLE_DATA = {
       "url": "https://golfsupport.com/bridgestone-tour-b-rx-white/",
       "boxImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/11575/32369/BRI22D0104002___L__18100.1718863289.jpg?c=1",
       "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/11575/32244/1708762342tourbxsballs__38271.1704717462.1280.1280__14642.1711380491.1280.1280__22575.1718705274.jpg?c=1",
-      "merchantId": "golfsupport"
+      "merchantId": "golfsupport",
+      "featured": false
     },
     {
       "rank": 3,
@@ -207,7 +189,8 @@ const SAMPLE_DATA = {
       "url": "https://golfsupport.com/pinnacle-rush-golf-balls-yellow/",
       "boxImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/10829/30691/1334505924PinnacleRush_Yellow__80712.1704717435.1280.1280__46818.1714745969.jpg?c=1",
       "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/10829/30691/1334505924PinnacleRush_Yellow__80712.1704717435.1280.1280__46818.1714745969.jpg?c=1",
-      "merchantId": "golfsupport"
+      "merchantId": "golfsupport",
+      "featured": false
     },
     {
       "rank": 4,
@@ -221,7 +204,8 @@ const SAMPLE_DATA = {
       "url": "https://www.clubhousegolf.co.uk/acatalog/Bridgestone-2023-Tour-B-RX-Golf-Balls-White.html",
       "boxImage": "https://www.clubhousegolf.co.uk/acatalog/300_85_Bridgestone-Tour-B-RX-Golf-Balls-White-1_Alt_103826.jpg",
       "ballImage": "https://www.clubhousegolf.co.uk/acatalog/300_85_Bridgestone-Tour-B-RX-Golf-Balls-White-1_Alt_103826.jpg",
-      "merchantId": "clubhousegolf"
+      "merchantId": "clubhousegolf",
+      "featured": false
     },
     {
       "rank": 5,
@@ -235,7 +219,8 @@ const SAMPLE_DATA = {
       "url": "https://www.clubhousegolf.co.uk/acatalog/Mizuno-RB-Tour-Golf-Balls.html",
       "boxImage": null,
       "ballImage": null,
-      "merchantId": "clubhousegolf"
+      "merchantId": "clubhousegolf",
+      "featured": false
     },
     {
       "rank": 6,
@@ -249,7 +234,8 @@ const SAMPLE_DATA = {
       "url": "https://www.clubhousegolf.co.uk/acatalog/Bridgestone-e12-Contact-Golf-Balls-White.html",
       "boxImage": "https://www.clubhousegolf.co.uk/acatalog/2023e12contactballswhite1.jpg",
       "ballImage": "https://www.clubhousegolf.co.uk/acatalog/2023e12contactballswhite2.jpg",
-      "merchantId": "clubhousegolf"
+      "merchantId": "clubhousegolf",
+      "featured": false
     },
     {
       "rank": 7,
@@ -263,7 +249,8 @@ const SAMPLE_DATA = {
       "url": "https://golfsupport.com/volvik-vivid-xt-soft-golf-balls-pink/",
       "boxImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/12743/37347/71UCt_HvZ6L._AC_SX425___02066.1751282364.jpg?c=1",
       "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/12743/37346/51qH1WUn8AL._AC_SX425___29406.1751282364.jpg?c=1",
-      "merchantId": "golfsupport"
+      "merchantId": "golfsupport",
+      "featured": false
     },
     {
       "rank": 8,
@@ -277,7 +264,8 @@ const SAMPLE_DATA = {
       "url": "https://golfsupport.com/macgregor-vip-soft-golf-balls-white/",
       "boxImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/6128/13792/270035519VIPWHITE__88441.1704718134.jpg?c=1",
       "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/6128/13791/1098315346VIPWHITEBALL__09327.1703780356.jpg?c=1",
-      "merchantId": "golfsupport"
+      "merchantId": "golfsupport",
+      "featured": false
     },
     {
       "rank": 9,
@@ -291,7 +279,8 @@ const SAMPLE_DATA = {
       "url": "https://www.clubhousegolf.co.uk/acatalog/Srixon-Z-Star-Diamond-Golf-Balls-White.html",
       "boxImage": "https://www.clubhousegolf.co.uk/acatalog/Srixon-2025-Z-Star-Diamond-Golf-Balls-White-1.jpg",
       "ballImage": "https://www.clubhousegolf.co.uk/acatalog/Srixon-2025-Z-Star-Diamond-Golf-Balls-White-2.jpg",
-      "merchantId": "clubhousegolf"
+      "merchantId": "clubhousegolf",
+      "featured": false
     },
     {
       "rank": 10,
@@ -305,7 +294,8 @@ const SAMPLE_DATA = {
       "url": "https://golfsupport.com/wilson-duo-soft-golf-balls-white/",
       "boxImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/5655/10852/1871564683WG2006119_0_Duo_Soft_Standard_Ball_12PK_Vert_RT_Hero__29755.1704717906.png?c=1",
       "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/5655/10851/427900679WG2006118_3_Duo_Soft_BallStamp__40329.1703778461.png?c=1",
-      "merchantId": "golfsupport"
+      "merchantId": "golfsupport",
+      "featured": false
     },
     {
       "rank": 11,
@@ -319,7 +309,8 @@ const SAMPLE_DATA = {
       "url": "https://www.clubhousegolf.co.uk/acatalog/Wilson-Staff-Model-Golf-Balls-White.html",
       "boxImage": "https://www.clubhousegolf.co.uk/acatalog/Wilson-2026-Staff-Model-Golf-Balls-White-1.jpg",
       "ballImage": "https://www.clubhousegolf.co.uk/acatalog/Wilson-2026-Staff-Model-Golf-Balls-White-2.jpg",
-      "merchantId": "clubhousegolf"
+      "merchantId": "clubhousegolf",
+      "featured": false
     },
     {
       "rank": 12,
@@ -333,7 +324,8 @@ const SAMPLE_DATA = {
       "url": "https://www.clubhousegolf.co.uk/acatalog/Callaway-Supersoft-Golf-Balls-White.html",
       "boxImage": "https://www.clubhousegolf.co.uk/acatalog/300_85_Callaway-2025-Supersoft-Golf-Balls-White-alt_119235.jpg",
       "ballImage": "https://www.clubhousegolf.co.uk/acatalog/300_85_Callaway-2025-Supersoft-Golf-Balls-White-alt_119235.jpg",
-      "merchantId": "clubhousegolf"
+      "merchantId": "clubhousegolf",
+      "featured": false
     },
     {
       "rank": 13,
@@ -347,7 +339,8 @@ const SAMPLE_DATA = {
       "url": "https://www.snaintongolf.co.uk/callaway-chrome-soft-x-ls-golf-balls",
       "boxImage": "https://www.snaintongolf.co.uk/media/catalog/product/cache/6517c62f5899ad6aa0ba23ceb3eeff97/c/a/callaway-2021-chrome-soft-x-ls-golf-balls-packaging.jpg",
       "ballImage": "https://www.snaintongolf.co.uk/media/catalog/product/c/a/callaway-2021-chrome-soft-x-ls-golf-ball-front.jpg",
-      "merchantId": "snaintongolf"
+      "merchantId": "snaintongolf",
+      "featured": false
     },
     {
       "rank": 14,
@@ -361,7 +354,8 @@ const SAMPLE_DATA = {
       "url": "https://golfsupport.com/bridgestone-e6-soft-golf-balls-white/",
       "boxImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/5198/7841/1814067380E6WHITEBOX__29186.1704717462.jpg?c=1",
       "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/5198/7835/5698887E62019_2__36718.1703776591.jpg?c=1",
-      "merchantId": "golfsupport"
+      "merchantId": "golfsupport",
+      "featured": false
     },
     {
       "rank": 15,
@@ -375,7 +369,8 @@ const SAMPLE_DATA = {
       "url": "https://golfsupport.com/wilson-ultra-distance-golf-balls-white-24-pack/",
       "boxImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/8417/25053/589171710195848164524_Pack__08113.1704791087.jpg?c=1",
       "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/8417/25053/589171710195848164524_Pack__08113.1704791087.jpg?c=1",
-      "merchantId": "golfsupport"
+      "merchantId": "golfsupport",
+      "featured": false
     },
     {
       "rank": 16,
@@ -389,7 +384,8 @@ const SAMPLE_DATA = {
       "url": "https://www.amazon.co.uk/dp/B0DPN7QZ9R?tag=golfballdeals-21",
       "boxImage": null,
       "ballImage": null,
-      "merchantId": "amazon"
+      "merchantId": "amazon",
+      "featured": false
     },
     {
       "rank": 17,
@@ -403,7 +399,8 @@ const SAMPLE_DATA = {
       "url": "https://www.scottsdalegolf.co.uk/shop/product/titleist-pro-v1-golf-balls-white-dozen",
       "boxImage": "https://scottsdalegolf.b-cdn.net/storage/129535/conversions/titleist-prov1-3-preview.png",
       "ballImage": "https://scottsdalegolf.b-cdn.net/storage/129536/conversions/titleist-prov1-1-preview.png",
-      "merchantId": "scottsdalegolf"
+      "merchantId": "scottsdalegolf",
+      "featured": false
     },
     {
       "rank": 18,
@@ -417,7 +414,23 @@ const SAMPLE_DATA = {
       "url": "https://www.vicegolf.co.uk/golf-balls/vice-golf-pro-white",
       "boxImage": "https://cdn.shopify.com/s/files/1/0832/9235/6897/files/PDP_Pro_White_Dozen_Zoom.jpg?v=1709811015",
       "ballImage": "https://cdn.shopify.com/s/files/1/0832/9235/6897/files/PDP_Pro_White_Front_Zoom.jpg?v=1709811015",
-      "merchantId": "vicegolf"
+      "merchantId": "vicegolf",
+      "featured": false
+    },
+    {
+      "rank": 19,
+      "brand": "Titleist",
+      "model": "Pro V1 Golf Balls (12 Pack)",
+      "site": "Affordable Golf",
+      "tier": "premium",
+      "price": 49.99,
+      "rrp": 49.99,
+      "discount": 0,
+      "url": "https://sovrn.co/1i7v0w6",
+      "boxImage": "https://www.affordablegolf.co.uk/cdn/shop/files/ProV1WhiteHERO.jpg?v=1782293086",
+      "ballImage": "https://www.affordablegolf.co.uk/cdn/shop/files/ProV1WhiteHERO.jpg?v=1782293086",
+      "merchantId": "affordablegolf",
+      "featured": true
     }
   ]
 };
@@ -425,7 +438,7 @@ const SAMPLE_DATA = {
 document.getElementById('year').textContent = new Date().getFullYear();
 
 let currentData = SAMPLE_DATA;
-let activeTiers = new Set(['premium','budget']);
+let activeTiers = new Set(['featured','premium','budget']);
 let activeBrands = null; // null until first data load, then Set of brand names
 let merchantsData = null;
 
@@ -495,33 +508,42 @@ function imgSlot(src, alt){
 }
 
 function cardHTML(d){
+  const featured = !!d.featured;
+  // Featured placements carry a pre-resolved tracking link (e.g. a manual
+  // Sovrn bootstrap link) and must NOT be re-wrapped by resolveAffiliateLink.
+  const href = featured ? d.url : resolveAffiliateLink(d.url, d.merchantId);
+  const rel = featured ? 'nofollow sponsored noopener' : 'nofollow noopener';
   return `
     <article class="card" data-tier="${d.tier}">
-      <span class="rank mono">${d.rank}</span>
       <div class="imgs">
         ${imgSlot(d.boxImage, d.brand + ' ' + d.model + ' box')}
         ${imgSlot(d.ballImage, d.brand + ' ' + d.model + ' ball')}
       </div>
       <div class="card-body">
-        <span class="tier-pill ${d.tier}">${d.tier}</span>
+        <div class="pill-row">
+          <span class="tier-pill ${featured ? 'featured' : d.tier}">${featured ? 'Featured' : d.tier}</span>
+          <span class="brand-pill">${d.brand}</span>
+        </div>
         <p class="model brand-font">${d.brand} ${d.model}</p>
         <p class="site-name">${d.site}</p>
         <div class="price-row">
           <span class="price">£${d.price.toFixed(2)}</span>
           ${d.discount > 0 ? `<span class="rrp">£${d.rrp.toFixed(2)}</span><span class="discount">-${d.discount}%</span>` : `<span class="best-price-tag">Best price found</span>`}
         </div>
-        <a class="cta" href="${resolveAffiliateLink(d.url, d.merchantId)}" target="_blank" rel="nofollow noopener">View deal</a>
+        <a class="cta" href="${href}" target="_blank" rel="${rel}">View deal</a>
       </div>
     </article>`;
 }
 
 function render(){
   const grid = document.getElementById('deals-grid');
-  const deals = currentData.deals.filter(d =>
-    d.merchantId !== 'amazon' &&
-    activeTiers.has(d.tier) &&
-    (activeBrands === null || activeBrands.has(d.brand))
-  );
+  const deals = currentData.deals.filter(d => {
+    if (d.merchantId === 'amazon') return false;
+    if (activeBrands !== null && !activeBrands.has(d.brand)) return false;
+    return d.featured ? activeTiers.has('featured') : activeTiers.has(d.tier);
+  });
+  // Featured entries always pin to the top-left, regardless of sort/filter order.
+  deals.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
   grid.innerHTML = deals.length
     ? deals.map(cardHTML).join('')
     : `<div class="empty">No deals match your filters right now.</div>`;
