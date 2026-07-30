@@ -1,0 +1,78 @@
+{
+  "_comment": "Priority order per merchant: 1) direct network if status=approved, 2) fallbackPreference network (skimlinks/sovrn) if that network is installed, 3) plain unaffiliated link. Update as Awin/Partnerize/FlexOffers approvals land or real Skimlinks/Sovrn commission data becomes available.",
+  "awinPublisherId": "3013085",
+  "amazonAssociatesTag": "golfballdeals-21",
+  "fallbackPreference": "skimlinks",
+  "fallbackPreferenceNote": "Placeholder default — no real per-merchant commission data from either network yet. Skimlinks has been live longer; Sovrn's commission/merchant API needs their campaign approval first (pending as of setup, needs real clicks through an installed link before review). Flip this once real numbers exist.",
+  "skimlinks": {
+    "publisherId": "306990X1795264",
+    "linkFormat": "https://go.skimresources.com/?id={publisherId}&xs=1&url={url}"
+  },
+  "sovrn": {
+    "campaignKey": "991f45cee97e7ff2f182899c2e17b14a",
+    "campaignStatus": "pending_approval",
+    "linkFormat": "https://redirect.viglink.com?key={campaignKey}&u={url}"
+  },
+  "merchants": [
+    {
+      "id": "amazon",
+      "name": "Amazon UK",
+      "domain": "amazon.co.uk",
+      "direct": { "network": "amazon-associates", "status": "approved" }
+    },
+    {
+      "id": "clubhousegolf",
+      "name": "Clubhouse Golf",
+      "domain": "clubhousegolf.co.uk",
+      "direct": { "network": "awin", "status": "pending", "advertiserId": "39290", "feedId": null }
+    },
+    {
+      "id": "golfsupport",
+      "name": "GolfSupport",
+      "domain": "golfsupport.com",
+      "direct": { "network": "awin", "status": "not_applied", "advertiserId": null, "feedId": null }
+    },
+    {
+      "id": "snaintongolf",
+      "name": "Snainton Golf",
+      "domain": "snaintongolf.co.uk",
+      "direct": { "network": "awin", "status": "not_applied", "advertiserId": null, "feedId": null }
+    },
+    {
+      "id": "scottsdalegolf",
+      "name": "Scottsdale Golf",
+      "domain": "scottsdalegolf.co.uk",
+      "direct": { "network": "awin", "status": "pending", "advertiserId": "813", "feedId": null }
+    },
+    {
+      "id": "sportsdirect",
+      "name": "Sports Direct",
+      "domain": "sportsdirect.com",
+      "direct": { "network": "awin", "status": "not_applied", "advertiserId": null, "feedId": null }
+    },
+    {
+      "id": "americangolf",
+      "name": "American Golf",
+      "domain": "americangolf.co.uk",
+      "direct": { "network": "partnerize", "status": "not_applied", "advertiserId": null }
+    },
+    {
+      "id": "golfonline",
+      "name": "GolfOnline",
+      "domain": "golfonline.co.uk",
+      "direct": { "network": "flexoffers", "status": "not_applied", "advertiserId": null }
+    },
+    {
+      "id": "onlinegolf",
+      "name": "OnlineGolf",
+      "domain": "onlinegolf.co.uk",
+      "direct": { "network": "partnerize", "status": "not_applied", "advertiserId": null }
+    },
+    {
+      "id": "affordablegolf",
+      "name": "Affordable Golf",
+      "domain": "affordablegolf.co.uk",
+      "direct": { "network": "awin", "status": "pending", "advertiserId": "82141", "feedId": null }
+    }
+  ]
+}
