@@ -75,9 +75,6 @@
   .pill-row{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
   .brand-pill{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:.2rem .55rem;border-radius:999px;background:var(--paper);color:var(--muted);border:1px solid var(--line)}
 
-  .featured-section{margin-top:2.5rem;padding-top:1.75rem;border-top:1px solid var(--line)}
-  .featured-heading{font-size:1.1rem;margin:0 0 1rem}
-  .featured-grid{grid-template-columns:repeat(auto-fill,minmax(255px,320px))}
 
   .model{font-weight:600;font-size:.98rem;margin:0}
   .site-name{color:var(--muted);font-size:.83rem;margin:0}
@@ -116,6 +113,7 @@
       <button class="pill-toggle active" data-tier="featured">Featured</button>
       <button class="pill-toggle active" data-tier="premium">Premium</button>
       <button class="pill-toggle active" data-tier="budget">Budget</button>
+      <button class="pill-toggle active" data-tier="amazon">Amazon</button>
     </div>
     <div class="filter-group" id="brand-filters" role="group" aria-label="Filter by brand">
       <span class="filter-label mono">BRAND</span>
@@ -124,11 +122,6 @@
 
   <div class="grid" id="deals-grid"></div>
 </main>
-
-<section class="featured-section" id="amazon-section" style="max-width:1100px;margin:0 auto;padding:0 1.5rem;display:none">
-  <h2 class="featured-heading brand-font">Golf Ball Deals on Amazon</h2>
-  <div class="grid featured-grid" id="amazon-grid"></div>
-</section>
 
 <footer>
   <div class="footer-inner">
@@ -438,7 +431,7 @@ const SAMPLE_DATA = {
 document.getElementById('year').textContent = new Date().getFullYear();
 
 let currentData = SAMPLE_DATA;
-let activeTiers = new Set(['featured','premium','budget']);
+let activeTiers = new Set(['featured','premium','budget','amazon']);
 let activeBrands = null; // null until first data load, then Set of brand names
 let merchantsData = null;
 
@@ -538,33 +531,21 @@ function cardHTML(d){
 function render(){
   const grid = document.getElementById('deals-grid');
   const deals = currentData.deals.filter(d => {
-    if (d.merchantId === 'amazon') return false;
     if (activeBrands !== null && !activeBrands.has(d.brand)) return false;
-    return d.featured ? activeTiers.has('featured') : activeTiers.has(d.tier);
+    if (d.featured) return activeTiers.has('featured');
+    if (d.merchantId === 'amazon') return activeTiers.has('amazon');
+    return activeTiers.has(d.tier);
   });
   // Featured entries always pin to the top-left, regardless of sort/filter order.
   deals.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
   grid.innerHTML = deals.length
     ? deals.map(cardHTML).join('')
     : `<div class="empty">No deals match your filters right now.</div>`;
-  renderAmazon();
-}
-
-function renderAmazon(){
-  const section = document.getElementById('amazon-section');
-  const grid = document.getElementById('amazon-grid');
-  const deals = (currentData.deals || []).filter(d => d.merchantId === 'amazon');
-  if(!deals.length){
-    section.style.display = 'none';
-    return;
-  }
-  section.style.display = '';
-  grid.innerHTML = deals.map(cardHTML).join('');
 }
 
 function renderBrandFilters(){
   const wrap = document.getElementById('brand-filters');
-  const brands = [...new Set(currentData.deals.filter(d => d.merchantId !== 'amazon').map(d => d.brand))].sort();
+  const brands = [...new Set(currentData.deals.map(d => d.brand))].sort();
   if(activeBrands === null){
     activeBrands = new Set(brands);
   }
