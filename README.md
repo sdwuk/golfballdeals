@@ -43,6 +43,25 @@ One Awin publisher account covers the five Awin merchants above — apply to
 each individually from the Awin dashboard once approved. Partnerize and
 FlexOffers need separate accounts.
 
+### Auto-affiliation (no per-merchant approval needed)
+
+In addition to the networks above, the site uses auto-affiliation services
+that rewrite outbound retailer links into affiliate links automatically at
+click time — no need to be individually approved by each retailer first:
+
+- **Skimlinks** — live, script installed in `index.html` (site ID
+  `306990X1795264`).
+- **Sovrn (Commerce)** — under consideration, not yet installed. Add the
+  same way once a site ID is issued: drop their script tag right before
+  `</body>` in `index.html`, and update `privacy.html`'s disclosure/cookie
+  sections to name them explicitly.
+
+These are a genuinely useful stopgap since they don't block on Awin/
+Partnerize/FlexOffers approvals, but note they typically pay a smaller
+share of commission than a direct affiliate relationship with the retailer
+— worth switching a retailer over to its direct network once approved,
+rather than relying on Skimlinks/Sovrn for everything long-term.
+
 ### Awin application status (as of 31 Jul 2026)
 
 Awin publisher account approved — publisher ID `3013085`, datafeed API key
