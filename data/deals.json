@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-30T22:10:00+01:00",
+  "lastUpdated": "2026-07-31T12:09:20+01:00",
   "isSampleData": false,
   "curationType": "manual",
   "deals": [
@@ -230,6 +230,21 @@
     },
     {
       "rank": 16,
+      "brand": "TaylorMade",
+      "model": "SpeedSoft Golf Balls (24 Balls)",
+      "site": "GolfOnline",
+      "tier": "budget",
+      "price": 47.95,
+      "rrp": 49.90,
+      "discount": 4,
+      "url": "https://www.golfonline.co.uk/taylormade-speedsoft-golf-balls-24-balls",
+      "boxImage": "https://static.golfonline.co/media/img/tm25bal-te918-m1030801-2dz_ex1a.jpg",
+      "ballImage": "https://static.golfonline.co/media/img/tm25bal-te918-m1030801-2dz_ex1a.jpg",
+      "merchantId": "golfonline",
+      "featured": false
+    },
+    {
+      "rank": 17,
       "brand": "Titleist",
       "model": "Pro V1 Golf Ball, Pack of 12 (White)",
       "site": "Amazon UK",
@@ -244,7 +259,7 @@
       "featured": false
     },
     {
-      "rank": 17,
+      "rank": 18,
       "brand": "Titleist",
       "model": "Pro V1 Golf Balls - White",
       "site": "Scottsdale Golf",
@@ -259,7 +274,7 @@
       "featured": false
     },
     {
-      "rank": 18,
+      "rank": 19,
       "brand": "Vice",
       "model": "Vice Pro Golf Balls - White",
       "site": "Vice Golf",
@@ -274,7 +289,7 @@
       "featured": false
     },
     {
-      "rank": 19,
+      "rank": 20,
       "brand": "Titleist",
       "model": "Pro V1 Golf Balls (12 Pack)",
       "site": "Affordable Golf",
@@ -287,6 +302,81 @@
       "ballImage": "https://www.affordablegolf.co.uk/cdn/shop/files/ProV1WhiteHERO.jpg?v=1782293086",
       "merchantId": "affordablegolf",
       "featured": true
+    },
+    {
+      "rank": 21,
+      "brand": "TaylorMade",
+      "model": "TP5 Performance Stripe Golf Balls - White",
+      "site": "Clubhouse Golf",
+      "tier": "premium",
+      "price": 24.99,
+      "rrp": 24.99,
+      "discount": 0,
+      "url": "https://www.clubhousegolf.co.uk/acatalog/TaylorMade-TP5-Performance-Stripe-Golf-Balls-White.html",
+      "boxImage": "https://www.clubhousegolf.co.uk/acatalog/TaylorMade-2026-TP5-Performance-Stripe-Golf-Balls-White-1.jpg",
+      "ballImage": "https://www.clubhousegolf.co.uk/acatalog/TaylorMade-2026-TP5-Performance-Stripe-Golf-Balls-White-1.jpg",
+      "merchantId": "clubhousegolf",
+      "featured": false
+    },
+    {
+      "rank": 22,
+      "brand": "Vice",
+      "model": "Vice Pro Plus Golf Balls - White",
+      "site": "Vice Golf",
+      "tier": "premium",
+      "price": 42.99,
+      "rrp": 42.99,
+      "discount": 0,
+      "url": "https://www.vicegolf.co.uk/golf-balls/vice-golf-pro-plus-white",
+      "boxImage": "https://cdn.shopify.com/s/files/1/0832/9235/6897/files/PDP_Pro_Plus_White_Dozen_Zoom.jpg?v=1709811032",
+      "ballImage": "https://cdn.shopify.com/s/files/1/0832/9235/6897/files/PDP_Pro_Plus_White_Front_Zoom.jpg?v=1709811032",
+      "merchantId": "vicegolf",
+      "featured": false
+    },
+    {
+      "rank": 23,
+      "brand": "PXG",
+      "model": "Xtreme Tour X Golf Balls (12 Balls)",
+      "site": "GolfOnline",
+      "tier": "premium",
+      "price": 39.95,
+      "rrp": 39.95,
+      "discount": 0,
+      "url": "https://www.golfonline.co.uk/pxg-xtreme-tour-x-golf-balls-12-balls",
+      "boxImage": "https://static.golfonline.co/media/img/pxg-xt-tour-wht_exa111.jpg",
+      "ballImage": "https://static.golfonline.co/media/img/pxg-xt-tour-wht_exa111.jpg",
+      "merchantId": "golfonline",
+      "featured": false
+    },
+    {
+      "rank": 24,
+      "brand": "Vice",
+      "model": "Vice Drive Golf Balls - White",
+      "site": "Vice Golf",
+      "tier": "budget",
+      "price": 21.99,
+      "rrp": 21.99,
+      "discount": 0,
+      "url": "https://www.vicegolf.co.uk/golf-balls/vice-golf-drive-white",
+      "boxImage": "https://cdn.shopify.com/s/files/1/0832/9235/6897/files/vice-golf-balls-packaging-Drive-White-Dozen-Ball.jpg?v=1776705663",
+      "ballImage": "https://cdn.shopify.com/s/files/1/0832/9235/6897/files/PDP_Drive_White_Front_Zoom.jpg?v=1709810929",
+      "merchantId": "vicegolf",
+      "featured": false
+    },
+    {
+      "rank": 25,
+      "brand": "Srixon",
+      "model": "Soft Feel Golf Balls - Yellow (12)",
+      "site": "GolfSupport",
+      "tier": "budget",
+      "price": 23.99,
+      "rrp": 23.99,
+      "discount": 0,
+      "url": "https://golfsupport.com/srixon-soft-feel-golf-balls-yellow-12/",
+      "boxImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/12592/36609/SX25-Balls-SF14-Tour-Yellow-2__30205.1745487011.jpg?c=1",
+      "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/12592/36609/SX25-Balls-SF14-Tour-Yellow-2__30205.1745487011.jpg?c=1",
+      "merchantId": "golfsupport",
+      "featured": false
     }
   ]
 }
