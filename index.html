@@ -647,95 +647,139 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --pine:#1f3a2e;
-    --pine-dark:#152820;
-    --brass:#c9a24b;
-    --brass-light:#e6c877;
-    --flag-red:#b6412e;
-    --cream:#f6f2e9;
-    --paper:#fffdf8;
-    --ink:#20291f;
-    --muted:#6b7367;
-    --line:#e3ddca;
-    --radius:14px;
+    --turf:#123524;
+    --turf-deep:#0a1f15;
+    --turf-light:#4f7a63;
+    --chalk:#f3f5ef;
+    --paper:#fdfdfb;
+    --flag-red:#e6402c;
+    --marker-gold:#e3b23c;
+    --ink:#101a14;
+    --mist:#d7ddd2;
+    --muted:#5c6b5f;
+    --radius:6px;
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--cream);color:var(--ink);font-family:'Work Sans',system-ui,sans-serif;line-height:1.5}
-  h1,h2,.brand-font{font-family:'Fraunces',Georgia,serif}
+  body{margin:0;background:var(--chalk);color:var(--ink);font-family:'IBM Plex Sans',system-ui,sans-serif;line-height:1.5;overflow-x:hidden}
+  h1,h2,.brand-font{font-family:'Big Shoulders Display',sans-serif;text-transform:uppercase;letter-spacing:-.01em}
   .mono{font-family:'IBM Plex Mono',monospace}
 
   header.site{
     background:
-      linear-gradient(135deg, rgba(21,40,32,.88), rgba(31,58,46,.82)),
-      url('https://images.unsplash.com/photo-1621005570352-6418df03796b?auto=format&fit=crop&w=2000&q=80') center 65%/cover no-repeat;
-    color:var(--cream);padding:2.75rem 1.5rem 2.25rem
+      linear-gradient(120deg, rgba(10,31,21,.96), rgba(18,53,36,.92)),
+      repeating-linear-gradient(100deg, rgba(255,255,255,.03) 0 30px, transparent 30px 60px);
+    color:var(--chalk);padding:2.5rem 1.5rem 2.1rem
   }
   .header-inner{max-width:1100px;margin:0 auto}
-  .site-logo{height:76px;width:auto;display:block;margin-bottom:.7rem}
-  .site-tagline{margin:0;color:#d7e0d5;font-size:1rem;font-family:'Work Sans',system-ui,sans-serif;font-weight:400}
-  .site-meta{margin-top:.6rem;font-size:.85rem;color:var(--brass-light)}
+  .logo-lockup{display:flex;align-items:center;gap:.85rem;margin-bottom:1rem}
+  .logo-mark{flex:none;width:34px;height:48px}
+  .wordmark{font-family:'Big Shoulders Display',sans-serif;font-weight:900;text-transform:uppercase;font-size:1.85rem;line-height:.85;letter-spacing:-.01em;color:#fff}
+  .wordmark .w-deals{color:var(--flag-red)}
+  .logo-caption{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--marker-gold);margin-top:.25rem}
+  .site-tagline{margin:0;color:#cfd9d0;font-size:1rem;font-family:'IBM Plex Sans',system-ui,sans-serif;font-weight:400;text-transform:none;letter-spacing:0;max-width:56ch}
+  .site-meta{margin-top:.7rem;font-size:.85rem;color:var(--marker-gold)}
 
   main{max-width:1100px;margin:0 auto;padding:1.75rem 1.5rem 4rem}
 
-  .filters{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.5rem}
-  .filter-group{display:flex;gap:.45rem;flex-wrap:wrap;align-items:center}
-  .filter-label{font-size:.72rem;color:var(--muted);letter-spacing:.06em;margin-right:.2rem}
-  .pill-toggle{border:1px solid var(--line);background:var(--paper);color:var(--muted);padding:.4rem .9rem;border-radius:999px;font-weight:500;font-size:.85rem;cursor:pointer;transition:.15s}
-  .pill-toggle:hover{border-color:var(--brass)}
-  .pill-toggle.active{background:var(--pine);border-color:var(--pine);color:#fff}
+  .filters{display:flex;flex-wrap:wrap;gap:.7rem;align-items:center;margin-bottom:1.5rem}
+  .seg{display:inline-flex;border:1.5px solid var(--turf);border-radius:999px;overflow:hidden}
+  .seg button{font-family:'IBM Plex Sans',sans-serif;font-size:.85rem;font-weight:600;border:none;background:var(--paper);color:var(--turf);padding:.48rem 1.05rem;cursor:pointer;transition:.15s}
+  .seg button+button{border-left:1.5px solid var(--turf)}
+  .seg button.active{background:var(--turf);color:#fff}
+  .seg button:hover:not(.active){background:var(--chalk)}
 
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:1rem}
+  .filter-disclosure{position:relative}
+  .filter-disclosure summary{list-style:none;cursor:pointer}
+  .filter-disclosure summary::-webkit-details-marker{display:none}
+  .filter-btn{font-family:'IBM Plex Sans',sans-serif;font-size:.85rem;font-weight:600;border:1.5px dashed var(--marker-gold);background:var(--paper);color:var(--turf-deep);padding:.46rem 1.05rem;border-radius:999px;display:inline-flex;align-items:center;gap:.5rem;transition:.15s}
+  .filter-btn:hover{background:#fbf3de}
+  .filter-count{background:var(--marker-gold);color:var(--turf-deep);font-size:.7rem;font-weight:700;border-radius:999px;padding:.05rem .5rem;font-family:'IBM Plex Mono',monospace}
+  .filter-chev{transition:transform .2s}
+  .filter-disclosure[open] .filter-chev{transform:rotate(180deg)}
+  .filter-panel{
+    position:absolute;top:calc(100% + .5rem);left:0;background:var(--paper);border:1px solid var(--mist);
+    border-radius:10px;box-shadow:0 14px 30px -12px rgba(10,31,21,.35);padding:1.1rem 1.2rem;z-index:8;
+    min-width:min(560px,86vw);max-height:60vh;overflow-y:auto;
+  }
+  .filter-panel-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem}
+  .filter-panel h4{margin:0 0 .55rem;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-family:'IBM Plex Mono',monospace}
+  .check-row{display:flex;align-items:center;gap:.5rem;font-size:.86rem;padding:.28rem 0;color:var(--ink)}
+  .check-row input{accent-color:var(--turf);width:15px;height:15px}
 
-  .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;position:relative}
+  .grid{display:flex;flex-wrap:wrap;gap:1rem}
 
-  .imgs{display:flex;background:#fff;height:150px;border-bottom:1px solid var(--line)}
-  .imgs .img-slot{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff}
-  .imgs img{max-width:100%;max-height:100%;object-fit:contain}
-  .placeholder-ball{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #fff, #e3ddca 70%);border:1px solid #d8d0b8}
+  .card{background:var(--paper);border:1px solid var(--mist);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;position:relative;flex:1 1 250px;max-width:280px}
 
-  .card-body{padding:.9rem 1rem 1.05rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
-  .tier-pill{align-self:flex-start;font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:.2rem .55rem;border-radius:999px}
-  .tier-pill.premium{background:#efe0b8;color:#7a5a12}
-  .tier-pill.budget{background:#dfe9dd;color:#2c5b3f}
-  .tier-pill.featured{background:var(--brass);color:var(--pine-dark)}
-  .pill-row{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
-  .brand-pill{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:.2rem .55rem;border-radius:999px;background:var(--paper);color:var(--muted);border:1px solid var(--line)}
+  .card-hero{position:relative;height:140px;background:linear-gradient(180deg,#fff,#f7f8f4);border-bottom:1px solid var(--mist);display:flex;align-items:center;justify-content:center}
+  .card-hero img.hero-img{max-width:78%;max-height:78%;object-fit:contain}
+  .hero-chip{position:absolute;top:8px;left:8px;width:34px;height:42px;border-radius:3px;overflow:hidden;box-shadow:0 3px 8px -2px rgba(10,31,21,.4);background:#fff;border:1px solid var(--mist)}
+  .hero-chip img{width:100%;height:100%;object-fit:contain}
+  .hero-empty{display:flex;flex-direction:column;align-items:center;gap:.4rem;color:var(--muted)}
+  .hero-empty svg{width:32px;height:32px;opacity:.45}
+  .hero-empty span{font-family:'IBM Plex Mono',monospace;font-size:.64rem;letter-spacing:.05em;text-transform:uppercase}
 
+  .card-top{display:flex;align-items:center;gap:.65rem;padding:.75rem .9rem .1rem}
+  .rank-num{font-family:'Big Shoulders Display',sans-serif;font-weight:900;font-size:1.7rem;color:var(--mist);line-height:1;min-width:1.5rem}
+  .card.is-featured .rank-num{color:var(--flag-red)}
+  .tag{font-family:'IBM Plex Mono',monospace;font-size:.64rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:.2rem .55rem;border-radius:999px}
+  .tag.premium{background:#f7e6bd;color:#7a5a12}
+  .tag.budget{background:#dbe6dd;color:var(--turf)}
+  .tag.featured{background:var(--flag-red);color:#fff}
 
-  .model{font-weight:600;font-size:.98rem;margin:0}
-  .site-name{color:var(--muted);font-size:.83rem;margin:0}
+  .card-body{padding:.7rem .95rem 1rem;display:flex;flex-direction:column;gap:.35rem;flex:1}
+  .model{font-weight:600;font-size:.94rem;margin:0;font-family:'IBM Plex Sans',sans-serif;text-transform:none;letter-spacing:0}
+  .site-name{color:var(--muted);font-size:.8rem;margin:0}
 
-  .price-row{display:flex;align-items:baseline;gap:.5rem;margin-top:.2rem}
-  .price{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:1.15rem;color:var(--pine-dark)}
-  .rrp{font-family:'IBM Plex Mono',monospace;color:var(--muted);text-decoration:line-through;font-size:.85rem}
-  .discount{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--flag-red);font-size:.9rem}
-  .best-price-tag{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.03em}
+  .price-row{display:flex;align-items:baseline;gap:.45rem;margin-top:.2rem}
+  .price{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:1.1rem;color:var(--ink);font-variant-numeric:tabular-nums}
+  .rrp{font-family:'IBM Plex Mono',monospace;color:var(--muted);text-decoration:line-through;font-size:.8rem}
+  .discount{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-weight:700;color:var(--flag-red);font-size:.88rem}
+  .best-price-tag{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.03em}
 
-  .cta{margin-top:.6rem;display:inline-block;text-align:center;background:var(--brass);color:var(--pine-dark);text-decoration:none;font-weight:600;padding:.55rem 0;border-radius:8px;font-size:.9rem;transition:.15s}
-  .cta:hover{background:var(--brass-light)}
+  .cta{margin-top:.6rem;display:inline-block;text-align:center;background:var(--flag-red);color:#fff;text-decoration:none;font-weight:600;padding:.55rem 0;border-radius:var(--radius);font-size:.88rem;transition:.15s;font-family:'IBM Plex Sans',sans-serif}
+  .cta:hover{background:#cf3520}
 
-  footer{background:var(--pine-dark);color:#c8d1c5;padding:2rem 1.5rem;margin-top:2rem}
+  footer{background:var(--turf-deep);color:#cfd9d0;padding:2rem 1.5rem;margin-top:2rem}
   .footer-inner{max-width:1100px;margin:0 auto;font-size:.85rem;display:flex;flex-wrap:wrap;gap:.4rem 1.5rem;justify-content:space-between;align-items:center}
-  footer a{color:var(--brass-light);text-decoration:none}
+  footer a{color:var(--marker-gold);text-decoration:none}
   footer a:hover{text-decoration:underline}
 
   .empty{padding:3rem 1rem;text-align:center;color:var(--muted)}
   .intro-copy{max-width:760px;margin:0 0 1.75rem;color:var(--muted);font-size:.95rem;line-height:1.6}
+
   .faq{max-width:760px;margin:3rem auto 0;padding:0 1.5rem}
-  .faq h2{font-size:1.1rem}
-  .faq-item{margin-bottom:1.2rem}
-  .faq-item h3{font-size:.95rem;margin:0 0 .3rem}
-  .faq-item p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.55}
+  .faq h2{font-size:1.3rem;margin:0 0 1rem}
+  .faq-list{display:grid;gap:.6rem}
+  .faq-item{background:var(--paper);border:1px solid var(--mist);border-radius:10px;overflow:hidden}
+  .faq-item summary{list-style:none;padding:.9rem 1.05rem;font-weight:600;font-size:.92rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;color:var(--ink);transition:background .15s;font-family:'IBM Plex Sans',sans-serif}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary:hover{background:var(--chalk)}
+  .faq-plus{flex:none;width:20px;height:20px;border-radius:50%;background:var(--chalk);color:var(--turf);display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:transform .2s}
+  .faq-item[open] .faq-plus{transform:rotate(45deg);background:var(--marker-gold);color:var(--turf-deep)}
+  .faq-item p{margin:0;padding:0 1.05rem 1rem;color:var(--muted);font-size:.88rem;line-height:1.6}
+
+  @media (prefers-reduced-motion:reduce){*{transition-duration:.001ms !important}}
 </style>
 </head>
 <body>
 
 <header class="site">
   <div class="header-inner">
-    <img class="site-logo" src="assets/logo-light.svg" alt="GolfBallDeals.co.uk" width="304" height="76">
+    <div class="logo-lockup">
+      <svg class="logo-mark" viewBox="0 0 46 64" fill="none" aria-hidden="true">
+        <ellipse cx="15" cy="59" rx="13" ry="4.5" fill="#4f7a63" opacity=".55"/>
+        <rect x="13" y="6" width="2.4" height="53" rx="1.2" fill="#f3f5ef"/>
+        <path d="M15.4 8 L44 19 L15.4 30 Z" fill="#e6402c"/>
+        <circle cx="22.5" cy="19" r="3.4" fill="#0a1f15"/>
+      </svg>
+      <div>
+        <div class="wordmark">Golfball<span class="w-deals">Deals</span></div>
+        <p class="logo-caption">UK prices · ranked daily</p>
+      </div>
+    </div>
     <h1 class="site-tagline">Best UK Golf Ball Deals: Compare Prices on Titleist, Callaway, TaylorMade &amp; More</h1>
     <p class="site-meta mono" id="next-refresh"></p>
   </div>
@@ -743,18 +787,29 @@
 
 <main>
   <div class="filters">
-    <div class="filter-group" id="tier-filters" role="group" aria-label="Filter by type">
-      <span class="filter-label mono">TYPE</span>
-      <button class="pill-toggle active" data-tier="featured">Featured</button>
-      <button class="pill-toggle active" data-tier="premium">Premium</button>
-      <button class="pill-toggle active" data-tier="budget">Budget</button>
+    <div class="seg" id="tier-filters" role="group" aria-label="Filter by type">
+      <button class="active" data-tier="featured" type="button">Featured</button>
+      <button class="active" data-tier="premium" type="button">Premium</button>
+      <button class="active" data-tier="budget" type="button">Budget</button>
     </div>
-    <div class="filter-group" id="store-filters" role="group" aria-label="Filter by store">
-      <span class="filter-label mono">STORE</span>
-    </div>
-    <div class="filter-group" id="brand-filters" role="group" aria-label="Filter by brand">
-      <span class="filter-label mono">BRAND</span>
-    </div>
+    <details class="filter-disclosure" id="filter-disclosure">
+      <summary class="filter-btn">
+        Store &amp; brand <span class="filter-count mono" id="filter-count" hidden></span>
+        <svg class="filter-chev" width="11" height="7" viewBox="0 0 11 7" fill="none" aria-hidden="true"><path d="M1 1L5.5 5.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="filter-panel">
+        <div class="filter-panel-cols">
+          <div>
+            <h4>Store</h4>
+            <div id="store-filters" role="group" aria-label="Filter by store"></div>
+          </div>
+          <div>
+            <h4>Brand</h4>
+            <div id="brand-filters" role="group" aria-label="Filter by brand"></div>
+          </div>
+        </div>
+      </div>
+    </details>
   </div>
 
   <p class="intro-copy">We track the best UK deals on Golf Balls across popular stores such as GolfSupport, Clubhouse Golf, Scottsdale Golf, Snainton Golf, Vice Golf and Amazon UK. See deals on Titleist, Callaway, TaylorMade, Srixon, Bridgestone, Wilson, Mizuno, Vice and more. Genuine discounts are flagged and best-prices are too, so you always know what you're looking at.</p>
@@ -764,17 +819,19 @@
 
 <section class="faq">
   <h2 class="brand-font">Common questions</h2>
-  <div class="faq-item">
-    <h3 class="brand-font">How often are these golf ball prices updated?</h3>
-    <p>Prices are manually checked against each retailer's own product page roughly once a day, so what you see should reflect current UK pricing — always confirm the final price on the retailer's site before buying.</p>
-  </div>
-  <div class="faq-item">
-    <h3 class="brand-font">Are these genuine discounts?</h3>
-    <p>Yes — a deal only gets a discount badge if the retailer's own page shows a real crossed-out price alongside a lower current price. We never invent an RRP to manufacture a discount; entries with no live markdown are shown as a neutral "best price found" instead.</p>
-  </div>
-  <div class="faq-item">
-    <h3 class="brand-font">Which brands do you cover?</h3>
-    <p>Titleist, Callaway, TaylorMade, Srixon, Bridgestone, Wilson, Mizuno, Vice and more — we're working through the UK's most popular golf ball brands and adding verified prices as we confirm them.</p>
+  <div class="faq-list">
+    <details class="faq-item" open>
+      <summary>How often are these golf ball prices updated?<span class="faq-plus">+</span></summary>
+      <p>Prices are manually checked against each retailer's own product page roughly once a day, so what you see should reflect current UK pricing — always confirm the final price on the retailer's site before buying.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Are these genuine discounts?<span class="faq-plus">+</span></summary>
+      <p>Yes — a deal only gets a discount badge if the retailer's own page shows a real crossed-out price alongside a lower current price. We never invent an RRP to manufacture a discount; entries with no live markdown are shown as a neutral "best price found" instead.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Which brands do you cover?<span class="faq-plus">+</span></summary>
+      <p>Titleist, Callaway, TaylorMade, Srixon, Bridgestone, Wilson, Mizuno, Vice and more — we're working through the UK's most popular golf ball brands and adding verified prices as we confirm them.</p>
+    </details>
   </div>
 </section>
 
@@ -791,7 +848,7 @@
 // data/deals.json — real prices, checked by hand against each retailer's
 // site, not yet pulled from an automated affiliate feed.
 const SAMPLE_DATA = {
-  "lastUpdated": "2026-07-31T12:09:20+01:00",
+  "lastUpdated": "2026-08-06T21:30:32+01:00",
   "isSampleData": false,
   "curationType": "manual",
   "deals": [
@@ -1027,7 +1084,7 @@ const SAMPLE_DATA = {
       "site": "GolfOnline",
       "tier": "budget",
       "price": 47.95,
-      "rrp": 49.9,
+      "rrp": 49.90,
       "discount": 4,
       "url": "https://www.golfonline.co.uk/taylormade-speedsoft-golf-balls-24-balls",
       "boxImage": "https://static.golfonline.co/media/img/tm25bal-te918-m1030801-2dz_ex1a.jpg",
@@ -1169,6 +1226,156 @@ const SAMPLE_DATA = {
       "ballImage": "https://cdn11.bigcommerce.com/s-fgzhrtr768/images/stencil/1280x1280/products/12592/36609/SX25-Balls-SF14-Tour-Yellow-2__30205.1745487011.jpg?c=1",
       "merchantId": "golfsupport",
       "featured": false
+    },
+    {
+      "rank": 26,
+      "brand": "Wilson",
+      "model": "Staff TRIAD Golf Balls - White",
+      "site": "Major Golf Direct",
+      "tier": "premium",
+      "price": 29.99,
+      "rrp": 45.00,
+      "discount": 33,
+      "url": "https://www.majorgolfdirect.com/products/wilson-staff-triad-golf-balls-white-copy",
+      "boxImage": "http://www.majorgolfdirect.com/cdn/shop/files/TRIAD1.jpg?v=1737969449",
+      "ballImage": "http://www.majorgolfdirect.com/cdn/shop/files/TRIAD1.jpg?v=1737969449",
+      "merchantId": "majorgolf",
+      "featured": false
+    },
+    {
+      "rank": 27,
+      "brand": "PXG",
+      "model": "Xtreme Tour Golf Balls - White",
+      "site": "Major Golf Direct",
+      "tier": "premium",
+      "price": 109.00,
+      "rrp": 160.00,
+      "discount": 32,
+      "url": "https://www.majorgolfdirect.com/products/pxg-xtreme-tour-golf-balls-white-4-for-3",
+      "boxImage": "http://www.majorgolfdirect.com/cdn/shop/files/PXGXtremeTourGolfBalls-White4For3.jpg?v=1777639279",
+      "ballImage": "http://www.majorgolfdirect.com/cdn/shop/files/PXGXtremeTourGolfBalls-White4For3.jpg?v=1777639279",
+      "merchantId": "majorgolf",
+      "featured": false
+    },
+    {
+      "rank": 28,
+      "brand": "Bridgestone",
+      "model": "Tour B X Golf Balls 2026 - White",
+      "site": "Major Golf Direct",
+      "tier": "premium",
+      "price": 37.95,
+      "rrp": 45.00,
+      "discount": 16,
+      "url": "https://www.majorgolfdirect.com/products/bridgestone-tour-b-x-golf-balls-2026",
+      "boxImage": "http://www.majorgolfdirect.com/cdn/shop/files/BridgestoneTourBXGolfBalls2026_4.jpg?v=1771926967",
+      "ballImage": "http://www.majorgolfdirect.com/cdn/shop/files/BridgestoneTourBXGolfBalls2026_4.jpg?v=1771926967",
+      "merchantId": "majorgolf",
+      "featured": false
+    },
+    {
+      "rank": 29,
+      "brand": "Srixon",
+      "model": "Q-Star Tour 6 Divide Golf Balls 2026 - Yellow/Orange",
+      "site": "Major Golf Direct",
+      "tier": "premium",
+      "price": 31.95,
+      "rrp": 36.99,
+      "discount": 14,
+      "url": "https://www.majorgolfdirect.com/products/srixon-q-star-tour-6-divide-golf-balls-yellow-orange",
+      "boxImage": "http://www.majorgolfdirect.com/cdn/shop/files/SrixonQStarTour6DivideGolfBalls2026-YellowOrange_12.jpg?v=1770724861",
+      "ballImage": "http://www.majorgolfdirect.com/cdn/shop/files/SrixonQStarTour6DivideGolfBalls2026-YellowOrange_12.jpg?v=1770724861",
+      "merchantId": "majorgolf",
+      "featured": false
+    },
+    {
+      "rank": 30,
+      "brand": "TaylorMade",
+      "model": "TP5 Golf Balls 2026 - White",
+      "site": "Major Golf Direct",
+      "tier": "premium",
+      "price": 44.95,
+      "rrp": 47.99,
+      "discount": 6,
+      "url": "https://www.majorgolfdirect.com/products/taylormade-tp5-golf-balls-2026-white",
+      "boxImage": "http://www.majorgolfdirect.com/cdn/shop/files/TaylorMadeTP5GolfBalls2026-White_1.jpg?v=1770213885",
+      "ballImage": "http://www.majorgolfdirect.com/cdn/shop/files/TaylorMadeTP5GolfBalls2026-White_1.jpg?v=1770213885",
+      "merchantId": "majorgolf",
+      "featured": false
+    },
+    {
+      "rank": 31,
+      "brand": "Titleist",
+      "model": "AVX Grade A Recycled Golf Balls",
+      "site": "Major Golf Direct",
+      "tier": "budget",
+      "price": 19.95,
+      "rrp": 35.00,
+      "discount": 43,
+      "url": "https://www.majorgolfdirect.com/products/titleist-avx-grade-a-recycled-golf-balls-copy",
+      "boxImage": "http://www.majorgolfdirect.com/cdn/shop/files/image001.png?v=1764327610",
+      "ballImage": "http://www.majorgolfdirect.com/cdn/shop/files/image001.png?v=1764327610",
+      "merchantId": "majorgolf",
+      "featured": false
+    },
+    {
+      "rank": 32,
+      "brand": "Bridgestone",
+      "model": "e6 Soft Golf Balls - Yellow",
+      "site": "Major Golf Direct",
+      "tier": "budget",
+      "price": 18.95,
+      "rrp": 25.00,
+      "discount": 24,
+      "url": "https://www.majorgolfdirect.com/products/bridgestone-e6-soft-golf-balls-2025-white-copy",
+      "boxImage": "http://www.majorgolfdirect.com/cdn/shop/files/BridgestoneE6SoftGolfBalls2025-Yellow1.jpg?v=1744274034",
+      "ballImage": "http://www.majorgolfdirect.com/cdn/shop/files/BridgestoneE6SoftGolfBalls2025-Yellow1.jpg?v=1744274034",
+      "merchantId": "majorgolf",
+      "featured": false
+    },
+    {
+      "rank": 33,
+      "brand": "Bridgestone",
+      "model": "e12 Straight Golf Balls - White",
+      "site": "Major Golf Direct",
+      "tier": "budget",
+      "price": 27.50,
+      "rrp": 35.00,
+      "discount": 21,
+      "url": "https://www.majorgolfdirect.com/products/bridgestone-golf-e12-straight-2025-white-golf-balls",
+      "boxImage": "http://www.majorgolfdirect.com/cdn/shop/files/BridgestoneGolfe12StraightGolfBalls2025-White1.jpg?v=1743418568",
+      "ballImage": "http://www.majorgolfdirect.com/cdn/shop/files/BridgestoneGolfe12StraightGolfBalls2025-White1.jpg?v=1743418568",
+      "merchantId": "majorgolf",
+      "featured": false
+    },
+    {
+      "rank": 34,
+      "brand": "Srixon",
+      "model": "AD333 Golf Balls 2026 - White",
+      "site": "Major Golf Direct",
+      "tier": "budget",
+      "price": 22.95,
+      "rrp": 28.00,
+      "discount": 18,
+      "url": "https://www.majorgolfdirect.com/products/srixon-ad333-12-golf-balls-white",
+      "boxImage": "http://www.majorgolfdirect.com/cdn/shop/files/SrixonAD33312GolfBalls2026-White_1.jpg?v=1765453014",
+      "ballImage": "http://www.majorgolfdirect.com/cdn/shop/files/SrixonAD33312GolfBalls2026-White_1.jpg?v=1765453014",
+      "merchantId": "majorgolf",
+      "featured": false
+    },
+    {
+      "rank": 35,
+      "brand": "Callaway",
+      "model": "Supersoft Golf Balls - White",
+      "site": "Major Golf Direct",
+      "tier": "budget",
+      "price": 24.95,
+      "rrp": 29.00,
+      "discount": 14,
+      "url": "https://www.majorgolfdirect.com/products/callaway-supersoft-25-12b-golf-balls-2025",
+      "boxImage": "http://www.majorgolfdirect.com/cdn/shop/files/SUPERSOFTWHITE20251_378844b8-9fcd-4a30-b1a8-fd743886aa75.jpg?v=1738245375",
+      "ballImage": "http://www.majorgolfdirect.com/cdn/shop/files/SUPERSOFTWHITE20251_378844b8-9fcd-4a30-b1a8-fd743886aa75.jpg?v=1738245375",
+      "merchantId": "majorgolf",
+      "featured": false
     }
   ]
 };
@@ -1249,11 +1456,37 @@ function formatUpdated(data){
   return `Updated ${stamp} UK time`;
 }
 
-function imgSlot(src, alt){
-  if(src){
-    return `<div class="img-slot"><img src="${src}" alt="${alt}" loading="lazy" referrerpolicy="no-referrer"></div>`;
+// Single hero image per card (ball shot preferred, box shot as fallback),
+// with the other image — when it's genuinely different — pinned as a small
+// corner chip. Falls back to a labelled empty state rather than blank space
+// when neither image is available (see index-notes in README).
+const HERO_EMPTY_SVG = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4"/><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1" opacity=".5"/></svg>`;
+
+// A src in the data doesn't guarantee the image actually loads — several
+// retailer CDNs (bigcommerce, clubhousegolf) intermittently 404 or block
+// hotlinking outright. onerror swaps in the same labelled empty state used
+// when there's no image at all, so a broken link degrades to "no photo
+// yet" instead of leaving a blank gap in the card.
+function onHeroImgError(imgEl, brand){
+  const container = imgEl.closest('.card-hero');
+  if(container) container.innerHTML = `<div class="hero-empty">${HERO_EMPTY_SVG}<span>${escAttr(brand)}</span></div>`;
+}
+
+function cardHero(d){
+  const hero = d.ballImage || d.boxImage || null;
+  const hasChip = d.boxImage && d.ballImage && d.boxImage !== d.ballImage;
+  const alt = escAttr(`${d.brand} ${d.model}`);
+  const brandAttr = escAttr(d.brand);
+  // brand also needs to survive being embedded inside a single-quoted JS
+  // string literal within the onerror="" attribute below.
+  const brandJs = brandAttr.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+  if(!hero){
+    return `<div class="hero-empty">${HERO_EMPTY_SVG}<span>${brandAttr}</span></div>`;
   }
-  return `<div class="img-slot"><div class="placeholder-ball" aria-hidden="true"></div></div>`;
+  return `
+    <img class="hero-img" src="${hero}" alt="${alt}" loading="lazy" referrerpolicy="no-referrer" onerror="onHeroImgError(this, '${brandJs}')">
+    ${hasChip ? `<div class="hero-chip"><img src="${d.boxImage}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.style.display='none'"></div>` : ''}
+  `;
 }
 
 // Minimal attribute-value escaping for the data-* attrs we build below —
@@ -1283,17 +1516,14 @@ function cardHTML(d){
     `data-featured="${featured}"`,
   ].join(' ');
   return `
-    <article class="card" data-tier="${d.tier}">
-      <div class="imgs">
-        ${imgSlot(d.boxImage, d.brand + ' ' + d.model + ' box')}
-        ${imgSlot(d.ballImage, d.brand + ' ' + d.model + ' ball')}
+    <article class="card ${featured ? 'is-featured' : ''}" data-tier="${d.tier}">
+      <div class="card-top">
+        <span class="rank-num mono">${d.rank ?? '—'}</span>
+        <span class="tag ${featured ? 'featured' : d.tier}">${featured ? 'Featured' : d.tier}</span>
       </div>
+      <div class="card-hero">${cardHero(d)}</div>
       <div class="card-body">
-        <div class="pill-row">
-          <span class="tier-pill ${featured ? 'featured' : d.tier}">${featured ? 'Featured' : d.tier}</span>
-          <span class="brand-pill">${d.brand}</span>
-        </div>
-        <p class="model brand-font">${d.brand} ${d.model}</p>
+        <p class="model">${d.brand} ${d.model}</p>
         <p class="site-name">${d.site}</p>
         <div class="price-row">
           <span class="price">£${d.price.toFixed(2)}</span>
@@ -1319,30 +1549,52 @@ function render(){
     : `<div class="empty">No deals match your filters right now.</div>`;
 }
 
+// Store/Brand render as checkboxes inside the single "Store & brand"
+// disclosure panel rather than a wall of pill buttons — see the count
+// badge in updateFilterCount(), which only appears once something's
+// actually been narrowed down.
+function checkRow(label, checked, onToggle){
+  const row = document.createElement('label');
+  row.className = 'check-row';
+  const cb = document.createElement('input');
+  cb.type = 'checkbox';
+  cb.checked = checked;
+  cb.addEventListener('change', () => onToggle(cb.checked));
+  row.appendChild(cb);
+  row.appendChild(document.createTextNode(label));
+  return row;
+}
+
+function updateFilterCount(){
+  const totalBrands = activeBrands ? activeBrands.size : 0;
+  const totalStores = activeStores ? activeStores.size : 0;
+  const allBrands = new Set(currentData.deals.map(d => d.brand)).size;
+  const allStores = new Set(currentData.deals.map(d => d.site)).size;
+  const badge = document.getElementById('filter-count');
+  const narrowed = totalBrands < allBrands || totalStores < allStores;
+  if(narrowed){
+    badge.textContent = `${totalBrands + totalStores}`;
+    badge.hidden = false;
+  }else{
+    badge.hidden = true;
+  }
+}
+
 function renderBrandFilters(){
   const wrap = document.getElementById('brand-filters');
   const brands = [...new Set(currentData.deals.map(d => d.brand))].sort();
   if(activeBrands === null){
     activeBrands = new Set(brands);
   }
-  wrap.querySelectorAll('.pill-toggle').forEach(b => b.remove());
+  wrap.innerHTML = '';
   brands.forEach(brand => {
-    const btn = document.createElement('button');
-    btn.className = 'pill-toggle' + (activeBrands.has(brand) ? ' active' : '');
-    btn.textContent = brand;
-    btn.dataset.brand = brand;
-    btn.addEventListener('click', () => {
-      if(activeBrands.has(brand)){
-        activeBrands.delete(brand);
-        btn.classList.remove('active');
-      }else{
-        activeBrands.add(brand);
-        btn.classList.add('active');
-      }
+    wrap.appendChild(checkRow(brand, activeBrands.has(brand), (checked) => {
+      if(checked) activeBrands.add(brand); else activeBrands.delete(brand);
+      updateFilterCount();
       render();
-    });
-    wrap.appendChild(btn);
+    }));
   });
+  updateFilterCount();
 }
 
 function renderStoreFilters(){
@@ -1351,24 +1603,15 @@ function renderStoreFilters(){
   if(activeStores === null){
     activeStores = new Set(stores);
   }
-  wrap.querySelectorAll('.pill-toggle').forEach(b => b.remove());
+  wrap.innerHTML = '';
   stores.forEach(store => {
-    const btn = document.createElement('button');
-    btn.className = 'pill-toggle' + (activeStores.has(store) ? ' active' : '');
-    btn.textContent = store;
-    btn.dataset.store = store;
-    btn.addEventListener('click', () => {
-      if(activeStores.has(store)){
-        activeStores.delete(store);
-        btn.classList.remove('active');
-      }else{
-        activeStores.add(store);
-        btn.classList.add('active');
-      }
+    wrap.appendChild(checkRow(store, activeStores.has(store), (checked) => {
+      if(checked) activeStores.add(store); else activeStores.delete(store);
+      updateFilterCount();
       render();
-    });
-    wrap.appendChild(btn);
+    }));
   });
+  updateFilterCount();
 }
 
 // --- Countdown to next daily price check (12:00 Europe/London, handles GMT/BST) ---
@@ -1399,7 +1642,7 @@ function updateCountdown(){
   el.textContent = `Next price check in ${h}h ${m}m ${s}s`;
 }
 
-document.querySelectorAll('#tier-filters .pill-toggle').forEach(btn => {
+document.querySelectorAll('#tier-filters button').forEach(btn => {
   btn.addEventListener('click', () => {
     const tier = btn.dataset.tier;
     if(activeTiers.has(tier)){
