@@ -1,13 +1,8 @@
 {
-  "_comment": "Priority order per merchant: 1) direct network if status=approved, 2) fallbackPreference network (skimlinks/sovrn) if that network is installed, 3) plain unaffiliated link. Update as Awin/Partnerize/FlexOffers approvals land or real Skimlinks/Sovrn commission data becomes available.",
+  "_comment": "Priority order per merchant: 1) direct network if status=approved, 2) Sovrn (auto-affiliation fallback) if installed, 3) plain unaffiliated link. Skimlinks was removed 6 Aug 2026 (Skimlinks ended the relationship) \u2014 Sovrn is now the sole fallback network. Update as Awin/Partnerize/FlexOffers approvals land.",
   "awinPublisherId": "3013085",
   "amazonAssociatesTag": "golfballdeals-21",
-  "fallbackPreference": "skimlinks",
-  "fallbackPreferenceNote": "Placeholder default \u2014 no real per-merchant commission data from either network yet. Skimlinks has been live longer; Sovrn's commission/merchant API needs their campaign approval first (pending as of setup, needs real clicks through an installed link before review). Flip this once real numbers exist.",
-  "skimlinks": {
-    "publisherId": "306990X1795264",
-    "linkFormat": "https://go.skimresources.com/?id={publisherId}&xs=1&url={url}"
-  },
+  "fallbackPreference": "sovrn",
   "sovrn": {
     "campaignKey": "991f45cee97e7ff2f182899c2e17b14a",
     "campaignStatus": "pending_approval",
@@ -117,6 +112,18 @@
         "status": "pending",
         "advertiserId": "82141",
         "feedId": null
+      }
+    },
+    {
+      "id": "majorgolf",
+      "name": "Major Golf Direct",
+      "domain": "majorgolfdirect.com",
+      "direct": {
+        "network": "awin",
+        "status": "approved",
+        "advertiserId": "83219",
+        "feedId": null,
+        "note": "Approved 6 Aug 2026. Awin has no product datafeed for this merchant even once approved, so it's excluded from fetch-deals.js's automated RETAILERS list \u2014 deals need manual curation into data/deals.json, same approach as Amazon. Direct Awin affiliate link is live via resolveAffiliateLink() as soon as a deal with merchantId 'majorgolf' exists."
       }
     },
     {

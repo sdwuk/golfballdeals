@@ -1,6 +1,6 @@
 # GolfBallDeals.co.uk
 
-A one-page site showing the top 20 UK golf ball deals, ranked by discount off
+A one-page site showing the best UK golf ball deals, ranked by discount off
 RRP, refreshed once a day at ~12:00 UK time. Live at
 [golfballdeals.co.uk](https://golfballdeals.co.uk), hosted on GitHub Pages.
 
@@ -10,12 +10,14 @@ RRP, refreshed once a day at ~12:00 UK time. Live at
   embedded sample data immediately, then overrides it by fetching
   `./data/deals.json` if reachable — so it always shows something even
   before a real feed is connected.
-- `data/deals.json` — the current top 20 deals. Overwritten daily by the
-  fetch script and committed back to the repo by GitHub Actions.
+- `data/deals.json` — the current deal list. Overwritten daily by the
+  fetch script and committed back to the repo by GitHub Actions. No fixed
+  size — see "Deal list size & per-partner minimum" below.
 - `scripts/fetch-deals.js` — Node script that pulls each retailer's
-  affiliate product feed, filters to golf balls, ranks by discount, and
-  writes the top 20 to `data/deals.json`. Awin is a real, working
-  integration; Partnerize and FlexOffers are stubbed pending account setup.
+  affiliate product feed, filters to golf balls, and writes the result to
+  `data/deals.json`, applying the per-partner minimum described below.
+  Awin is a real, working integration; Partnerize and FlexOffers are
+  stubbed pending account setup.
 - `.github/workflows/daily-refresh.yml` — runs the fetch script twice daily
   (11:00 & 12:00 UTC, to cover the UK's GMT/BST shift) and commits the
   updated `data/deals.json` if it changed.
@@ -45,39 +47,52 @@ FlexOffers need separate accounts.
 
 ### Auto-affiliation (no per-merchant approval needed)
 
-In addition to the networks above, the site uses auto-affiliation services
-that rewrite outbound retailer links into affiliate links automatically at
-click time — no need to be individually approved by each retailer first:
+In addition to the networks above, the site uses an auto-affiliation
+service that rewrites outbound retailer links into affiliate links
+automatically at click time — no need to be individually approved by each
+retailer first:
 
-- **Skimlinks** — live, script installed in `index.html` (site ID
-  `306990X1795264`).
-- **Sovrn (Commerce)** — under consideration, not yet installed. Add the
-  same way once a site ID is issued: drop their script tag right before
-  `</body>` in `index.html`, and update `privacy.html`'s disclosure/cookie
-  sections to name them explicitly.
+- **Sovrn (Commerce)** — live, client-side link rewriting handled in
+  `index.html`'s `resolveAffiliateLink()` using the campaign key in
+  `data/merchants.json`. Sovrn's campaign approval was still pending as of
+  the last check — worth confirming current status in the Sovrn dashboard,
+  since links may not earn commission until it's approved (the featured
+  rank-20 slot exists specifically to generate real clicks for that
+  review).
+- ~~**Skimlinks**~~ — removed 6 Aug 2026. Skimlinks ended the relationship
+  with this site, so its script and all related config/links were pulled
+  from `index.html`, `data/merchants.json`, and `privacy.html`. Sovrn is
+  now the sole fallback network.
 
-These are a genuinely useful stopgap since they don't block on Awin/
-Partnerize/FlexOffers approvals, but note they typically pay a smaller
+This is a genuinely useful stopgap since it doesn't block on Awin/
+Partnerize/FlexOffers approvals, but note it typically pays a smaller
 share of commission than a direct affiliate relationship with the retailer
 — worth switching a retailer over to its direct network once approved,
-rather than relying on Skimlinks/Sovrn for everything long-term.
+rather than relying on Sovrn for everything long-term.
 
-### Awin application status (as of 31 Jul 2026)
+### Awin application status (as of 6 Aug 2026)
 
 Awin publisher account approved — publisher ID `3013085`, datafeed API key
 obtained and stored as a GitHub secret. Individual merchant programme
-applications submitted, all still pending approval:
+applications submitted; most still pending approval.
 
-| Advertiser | Awin advertiser ID | Feed available? |
-|---|---|---|
-| Scottsdale Golf | 813 | yes |
-| Clubhouse Golf | 39290 | yes |
-| Callaway Golf (brand direct) | 19186 | yes |
-| Affordable Golf | 82141 | yes |
-| Hot Golf UK | 76732 | yes |
-| Jam Golf (UK) | 7912 | **no** — Awin has no datafeed for this merchant even once approved |
-| Discount Golf Store | 10153 | **no** — same |
-| Major Golf Direct | 83219 | **no** — same |
+| Advertiser | Awin advertiser ID | Feed available? | Status |
+|---|---|---|---|
+| Scottsdale Golf | 813 | yes | pending |
+| Clubhouse Golf | 39290 | yes | pending |
+| Callaway Golf (brand direct) | 19186 | yes | pending |
+| Affordable Golf | 82141 | yes | pending |
+| Hot Golf UK | 76732 | yes | pending |
+| Major Golf Direct | 83219 | **no** — Awin has no datafeed for this merchant even once approved | **approved 6 Aug 2026** |
+| Jam Golf (UK) | 7912 | **no** — same | pending |
+| Discount Golf Store | 10153 | **no** — same | pending |
+
+Major Golf Direct is now wired into `data/merchants.json` as `approved`
+with `advertiserId "83219"`, so `resolveAffiliateLink()` will build a
+direct Awin deep link for it as soon as a deal in `data/deals.json`
+carries `"merchantId": "majorgolf"`. Since Awin has no datafeed for this
+merchant, `scripts/fetch-deals.js` can't pull its products automatically —
+deals need to be added manually, the same way Amazon's are.
 
 Applied to but out of scope for this site (not golf-ball retailers) —
 skip: Evelyn Gold (jewellery), Payntr Golf EU (golf shoes only).
@@ -89,8 +104,8 @@ applying to.
 
 Feed IDs (as opposed to advertiser IDs) aren't visible until each
 programme approves the application, so nothing here can be wired into
-`scripts/fetch-deals.js` yet — the daily manual-scan process covers the
-gap until approvals land.
+`scripts/fetch-deals.js` for the feed-eligible merchants yet — the daily
+manual-scan process covers the gap until those approvals land.
 
 ## Affiliate link priority (data/merchants.json)
 
@@ -101,17 +116,13 @@ as the source of truth. Priority order per merchant:
 1. **Direct affiliate network** — if `merchants.json` marks that merchant's
    `direct.status` as `"approved"` (Awin deep link, or an Amazon Associates
    tagged link). This pays the most and has no middleman.
-2. **Skimlinks or Sovrn** — whichever `fallbackPreference` names. Both are
-   auto-affiliation services that don't require per-merchant approval.
-   `fallbackPreference` is currently a placeholder (`"skimlinks"`) since
-   neither network's real per-merchant commission data is available yet —
-   Sovrn's Merchant API needs their campaign approved first, which needs
-   real clicks through an installed Sovrn link before they'll review it.
-   Flip `fallbackPreference` to `"sovrn"` once real numbers show it pays
-   better for our retailers.
-3. **Plain, unaffiliated link** — if a merchant isn't covered by either
-   fallback network and has no direct relationship. `resolveAffiliateLink`
-   falls through to this automatically; nothing to configure.
+2. **Sovrn** — the auto-affiliation fallback network. Doesn't require
+   per-merchant approval. (Skimlinks was previously an alternate fallback
+   here but was removed 6 Aug 2026 when Skimlinks ended the relationship;
+   Sovrn is now the only fallback.)
+3. **Plain, unaffiliated link** — if a merchant isn't covered by Sovrn and
+   has no direct relationship. `resolveAffiliateLink` falls through to
+   this automatically; nothing to configure.
 
 Each deal in `data/deals.json` carries a `merchantId` matching an entry in
 `merchants.json`. When applying to/getting approved by a new network for a
@@ -125,12 +136,56 @@ live so Sovrn can see real clicks for campaign approval) and is **not**
 run through `resolveAffiliateLink`, so it won't get silently swapped out
 by the priority logic above.
 
-Credential handling: Skimlinks' publisher ID and Sovrn's campaign `key`
-are both meant to be public — each network's own docs show them embedded
-directly in outbound link URLs — so they live in `merchants.json` in this
-public repo. Sovrn's separate API *secret* (used for their authenticated
-backend API, e.g. pulling real commission data) is not public and is
-never committed here.
+Credential handling: Sovrn's campaign `key` is meant to be public — their
+own docs show it embedded directly in outbound link URLs — so it lives in
+`merchants.json` in this public repo. Sovrn's separate API *secret* (used
+for their authenticated backend API, e.g. pulling real commission data) is
+not public and is never committed here.
+
+## Outbound click tracking (Google Analytics)
+
+Added 6 Aug 2026. Every "View deal" click fires a custom GA4 event —
+`outbound_click` — via the existing gtag.js snippet (measurement ID
+`G-HRN035HKMQ`), just before the click opens the retailer in a new tab.
+Implemented as one delegated click listener on `#deals-grid`
+(`trackOutboundClicks()` near the bottom of `index.html`'s script), reading
+`data-*` attributes that `cardHTML()` stamps onto each `<a class="cta">`.
+Because links open with `target="_blank"`, there's no navigation race —
+no need for `event_callback`/beacon workarounds to make sure the hit lands.
+
+Event parameters sent with every `outbound_click`:
+
+| Parameter | Example | Notes |
+|---|---|---|
+| `link_url` | `https://www.awin1.com/cread.php?...` | the actual resolved href |
+| `link_domain` | `www.awin1.com` | parsed from `link_url` |
+| `merchant_id` | `majorgolf` | matches `data/merchants.json` |
+| `site_name` | `Major Golf Direct` | |
+| `network` | `awin` \| `amazon-associates` \| `sovrn` \| `sovrn-featured` \| `none` | which tier `resolveAffiliateLink()` actually used — see `resolveNetworkLabel()`, which shares logic with the link builder so the two can't drift apart |
+| `brand` | `Titleist` | |
+| `model` | `Pro V1 Golf Balls (12 Pack)` | |
+| `tier` | `premium` \| `budget` \| `featured` | |
+| `discount_percent` | `47` | numeric |
+| `price_gbp` | `29.99` | numeric |
+| `rank` | `3` | homepage discount-sort position at click time |
+| `is_featured` | `true` | |
+
+**To actually see these broken out in GA4 reports**, each parameter needs
+registering once in *Admin → Custom definitions → Create custom
+dimension* (or *custom metric* for `discount_percent`/`price_gbp` if you
+want averages/sums), mapped to the matching event parameter name above.
+Firing the event alone only gets you a raw event count — the custom
+dimensions are what let you build an Exploration report like "outbound
+clicks by `network` × `merchant_id`" or "average `discount_percent` of
+clicked deals by `tier`". This step can't be done from the codebase — it's
+a one-time manual step in the GA4 property admin UI.
+
+Separately, GA4's built-in **Enhanced measurement** (Admin → Data Streams
+→ your web stream) already auto-tracks generic outbound-link clicks
+site-wide with no code required — it's off by default only if someone
+disabled it. That gives basic `link_domain` data but none of the
+deal-specific parameters above, so the two are complementary, not
+redundant.
 
 ## Sitemap
 
@@ -138,6 +193,26 @@ never committed here.
 Console. Since the homepage's deal content changes daily, the daily scan
 task refreshes `sitemap.xml`'s `<lastmod>` for `/` each run it makes a
 change — `changefreq` is set to `daily` accordingly.
+
+## Deal list size & per-partner minimum
+
+Changed 6 Aug 2026: the site no longer caps the deal list at a fixed count
+("top 20"). Instead, **every affiliated partner is guaranteed at least its
+top 5 premium deals and top 5 budget deals** (by discount off RRP), even if
+those wouldn't otherwise rank in the global top tier. The total list size
+grows as more partners are added rather than staying fixed — a partner
+with fewer than 5 genuine deals in a tier just contributes all it has.
+
+This applies uniformly, whether a partner's deals come from the automated
+`scripts/fetch-deals.js` feed pull (`applyPerMerchantFloor()`, keyed on
+`MIN_PER_TIER = 5`) or from manual curation (Amazon, Major Golf Direct).
+For manually curated partners, apply the same 5+5 floor by hand when
+picking deals — it isn't currently enforced in code for those, since
+there's no live feed to pull a full catalog from.
+
+The `rank` field in `data/deals.json` is still a pure global discount
+ranking across the whole merged list (used for default sort order on the
+homepage) — it's cosmetic and doesn't gate whether a deal is included.
 
 ## Deal sourcing strategy
 
@@ -174,6 +249,7 @@ verifiable UK retail listings — they're skipped rather than guessed at.
    - `AWIN_SNAINTON_ID`, `AWIN_SNAINTON_FEED_ID`
    - `AWIN_SCOTTSDALE_ID`, `AWIN_SCOTTSDALE_FEED_ID`
    - `AWIN_SPORTSDIRECT_ID`, `AWIN_SPORTSDIRECT_FEED_ID`
+   - `AWIN_AFFORDABLEGOLF_ID`, `AWIN_AFFORDABLEGOLF_FEED_ID`
 3. Implement `fetchFromPartnerize()` and `fetchFromFlexOffers()` in
    `scripts/fetch-deals.js` once those account details are available —
    return shape should match `fetchFromAwin()`.

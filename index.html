@@ -1183,10 +1183,10 @@ let merchantsData = null;
 
 // --- Affiliate link resolution -------------------------------------------
 // Priority: 1) direct affiliate network, if approved for this merchant
-//           2) Skimlinks or Sovrn (whichever fallbackPreference names —
-//              a placeholder until real per-merchant commission data
-//              exists to compare the two properly)
-//           3) plain, unaffiliated link if neither covers this merchant
+//           2) Sovrn (auto-affiliation fallback — Skimlinks was dropped
+//              6 Aug 2026 when Skimlinks ended the relationship; Sovrn is
+//              the sole fallback network now)
+//           3) plain, unaffiliated link if Sovrn doesn't cover this merchant
 function buildAwinLink(destUrl, advertiserId){
   return `https://www.awin1.com/cread.php?awinmid=${advertiserId}&awinaffid=${merchantsData.awinPublisherId}&clickref=&p=${encodeURIComponent(destUrl)}`;
 }
@@ -1202,33 +1202,43 @@ function buildAmazonLink(destUrl, tag){
 function buildFallbackLink(destUrl, network){
   const cfg = merchantsData[network];
   if(!cfg) return null;
-  if(network === 'skimlinks'){
-    return cfg.linkFormat.replace('{publisherId}', cfg.publisherId).replace('{url}', encodeURIComponent(destUrl));
-  }
   if(network === 'sovrn'){
     return cfg.linkFormat.replace('{campaignKey}', cfg.campaignKey).replace('{url}', encodeURIComponent(destUrl));
   }
   return null;
 }
+// Shared by resolveAffiliateLink() and the click-tracking code below, so
+// the "which network did this link actually use" logic only lives once.
+function getDirectNetworkIfApproved(merchantId){
+  if(!merchantsData) return null;
+  const m = merchantsData.merchants.find(x => x.id === merchantId);
+  if(m && m.direct && m.direct.status === 'approved'){
+    if(m.direct.network === 'awin' && m.direct.advertiserId) return 'awin';
+    if(m.direct.network === 'amazon-associates') return 'amazon-associates';
+    // Partnerize/FlexOffers direct-link formats not implemented yet —
+    // treated as not-direct until they are.
+  }
+  return null;
+}
+function resolveNetworkLabel(merchantId){
+  const direct = getDirectNetworkIfApproved(merchantId);
+  if(direct) return direct;
+  if(merchantsData && merchantsData.sovrn) return 'sovrn';
+  return 'none';
+}
 function resolveAffiliateLink(destUrl, merchantId){
   if(!merchantsData) return destUrl; // merchants.json not loaded yet
   const m = merchantsData.merchants.find(x => x.id === merchantId);
-  if(m && m.direct && m.direct.status === 'approved'){
-    if(m.direct.network === 'awin' && m.direct.advertiserId){
-      return buildAwinLink(destUrl, m.direct.advertiserId);
-    }
-    if(m.direct.network === 'amazon-associates'){
-      return buildAmazonLink(destUrl, merchantsData.amazonAssociatesTag);
-    }
-    // Partnerize/FlexOffers direct-link formats not implemented yet —
-    // falls through to the auto-affiliation tier below until then.
+  const direct = getDirectNetworkIfApproved(merchantId);
+  if(direct === 'awin'){
+    return buildAwinLink(destUrl, m.direct.advertiserId);
   }
-  const order = merchantsData.fallbackPreference === 'sovrn' ? ['sovrn', 'skimlinks'] : ['skimlinks', 'sovrn'];
-  for(const net of order){
-    const link = buildFallbackLink(destUrl, net);
-    if(link) return link;
+  if(direct === 'amazon-associates'){
+    return buildAmazonLink(destUrl, merchantsData.amazonAssociatesTag);
   }
-  return destUrl; // neither network covers this merchant — no affiliation
+  const link = buildFallbackLink(destUrl, 'sovrn');
+  if(link) return link;
+  return destUrl; // Sovrn doesn't cover this merchant — no affiliation
 }
 
 function formatUpdated(data){
@@ -1246,12 +1256,32 @@ function imgSlot(src, alt){
   return `<div class="img-slot"><div class="placeholder-ball" aria-hidden="true"></div></div>`;
 }
 
+// Minimal attribute-value escaping for the data-* attrs we build below —
+// deal names occasionally contain quotes/ampersands (e.g. brand names).
+function escAttr(str){
+  return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+}
+
 function cardHTML(d){
   const featured = !!d.featured;
   // Featured placements carry a pre-resolved tracking link (e.g. a manual
   // Sovrn bootstrap link) and must NOT be re-wrapped by resolveAffiliateLink.
   const href = featured ? d.url : resolveAffiliateLink(d.url, d.merchantId);
   const rel = featured ? 'nofollow sponsored noopener' : 'nofollow noopener';
+  const network = featured ? 'sovrn-featured' : resolveNetworkLabel(d.merchantId);
+  // data-* attrs read by the outbound-click GA4 tracker (see trackOutboundClicks below).
+  const trackingAttrs = [
+    `data-merchant-id="${escAttr(d.merchantId || '')}"`,
+    `data-site="${escAttr(d.site)}"`,
+    `data-network="${escAttr(network)}"`,
+    `data-brand="${escAttr(d.brand)}"`,
+    `data-model="${escAttr(d.model)}"`,
+    `data-tier="${escAttr(featured ? 'featured' : d.tier)}"`,
+    `data-discount="${d.discount}"`,
+    `data-price="${d.price}"`,
+    `data-rank="${d.rank ?? ''}"`,
+    `data-featured="${featured}"`,
+  ].join(' ');
   return `
     <article class="card" data-tier="${d.tier}">
       <div class="imgs">
@@ -1269,7 +1299,7 @@ function cardHTML(d){
           <span class="price">£${d.price.toFixed(2)}</span>
           ${d.discount > 0 ? `<span class="rrp">£${d.rrp.toFixed(2)}</span><span class="discount">-${d.discount}%</span>` : `<span class="best-price-tag">Best price found</span>`}
         </div>
-        <a class="cta" href="${href}" target="_blank" rel="${rel}">View deal</a>
+        <a class="cta" href="${href}" target="_blank" rel="${rel}" ${trackingAttrs}>View deal</a>
       </div>
     </article>`;
 }
@@ -1383,6 +1413,39 @@ document.querySelectorAll('#tier-filters .pill-toggle').forEach(btn => {
   });
 });
 
+// --- Outbound click tracking (GA4) ---------------------------------------
+// Fires a custom `outbound_click` event with deal metadata just before the
+// person leaves for the retailer. Uses event delegation on the grid
+// container so it keeps working across re-renders (filtering, live data
+// swap-in) without re-attaching listeners per card. Links open in a new
+// tab (target="_blank" in cardHTML), so there's no navigation race —
+// no need for event_callback/beacon tricks to make sure the hit lands.
+function trackOutboundClicks(){
+  const grid = document.getElementById('deals-grid');
+  if(!grid) return;
+  grid.addEventListener('click', (e) => {
+    const link = e.target.closest('a.cta');
+    if(!link || typeof gtag !== 'function') return;
+    let domain = '';
+    try{ domain = new URL(link.href).hostname; }catch(err){ /* leave blank */ }
+    gtag('event', 'outbound_click', {
+      link_url: link.href,
+      link_domain: domain,
+      merchant_id: link.dataset.merchantId || '(none)',
+      site_name: link.dataset.site,
+      network: link.dataset.network,       // 'awin' | 'amazon-associates' | 'sovrn' | 'sovrn-featured' | 'none'
+      brand: link.dataset.brand,
+      model: link.dataset.model,
+      tier: link.dataset.tier,             // 'premium' | 'budget' | 'featured'
+      discount_percent: Number(link.dataset.discount) || 0,
+      price_gbp: Number(link.dataset.price) || 0,
+      rank: link.dataset.rank ? Number(link.dataset.rank) : null,
+      is_featured: link.dataset.featured === 'true',
+    });
+  });
+}
+trackOutboundClicks();
+
 renderBrandFilters();
 renderStoreFilters();
 render();
@@ -1406,9 +1469,6 @@ Promise.all([
   }
 });
 </script>
-
-<!-- Skimlinks — auto-affiliate link monetization, no per-merchant approval needed -->
-<script type="text/javascript" src="https://s.skimresources.com/js/306990X1795264.skimlinks.js"></script>
 
 </body>
 </html>

@@ -2,8 +2,17 @@
  * fetch-deals.js
  * ----------------------------------------------------------------------
  * Pulls golf ball products from each retailer's affiliate feed, filters
- * to golf balls, ranks by discount off RRP, and writes the top 20 to
- * ../data/deals.json — the file index.html fetches on load.
+ * to golf balls, and writes deals.json — the file index.html fetches on
+ * load.
+ *
+ * SELECTION POLICY (changed 6 Aug 2026 — no more fixed "top 20"):
+ * Every retailer with live feed products gets a guaranteed floor of its
+ * top 5 premium + top 5 budget deals (by discount off RRP), even if
+ * those wouldn't rank in the global top tier. There's no overall cap —
+ * the total list grows as more retailers come online. See MIN_PER_TIER
+ * below and applyPerMerchantFloor(). `rank` in the output is still a
+ * pure global discount ranking across the whole merged list, purely for
+ * display/sort purposes — it does NOT gate inclusion.
  *
  * Run manually with:   node scripts/fetch-deals.js
  * Run daily via:        .github/workflows/daily-refresh.yml
@@ -42,52 +51,82 @@ function isRoughlyUKNoon() {
 const RETAILERS = [
   {
     site: 'Clubhouse Golf',
+    merchantId: 'clubhousegolf', // must match an id in data/merchants.json
     network: 'awin',
     awinAdvertiserId: process.env.AWIN_CLUBHOUSE_ID || null,
     awinFeedId: process.env.AWIN_CLUBHOUSE_FEED_ID || null,
   },
   {
     site: 'GolfSupport',
+    merchantId: 'golfsupport',
     network: 'awin',
     awinAdvertiserId: process.env.AWIN_GOLFSUPPORT_ID || null,
     awinFeedId: process.env.AWIN_GOLFSUPPORT_FEED_ID || null,
   },
   {
     site: 'Snainton Golf',
+    merchantId: 'snaintongolf',
     network: 'awin',
     awinAdvertiserId: process.env.AWIN_SNAINTON_ID || null,
     awinFeedId: process.env.AWIN_SNAINTON_FEED_ID || null,
   },
   {
     site: 'Scottsdale Golf',
+    merchantId: 'scottsdalegolf',
     network: 'awin', // also on Avelon — see TODO below
     awinAdvertiserId: process.env.AWIN_SCOTTSDALE_ID || null,
     awinFeedId: process.env.AWIN_SCOTTSDALE_FEED_ID || null,
   },
   {
     site: 'American Golf',
+    merchantId: 'americangolf',
     network: 'partnerize', // TODO: implement — see fetchFromPartnerize() below
   },
   {
     site: 'GolfOnline',
+    merchantId: 'golfonline',
     network: 'flexoffers', // TODO: implement — see fetchFromFlexOffers() below
   },
   {
     site: 'OnlineGolf',
+    merchantId: 'onlinegolf',
     network: 'partnerize', // TODO: implement — see fetchFromPartnerize() below
   },
   {
     site: 'Sports Direct',
+    merchantId: 'sportsdirect',
     network: 'awin', // unverified — confirm network when you sign up
     awinAdvertiserId: process.env.AWIN_SPORTSDIRECT_ID || null,
     awinFeedId: process.env.AWIN_SPORTSDIRECT_FEED_ID || null,
   },
+  {
+    site: 'Affordable Golf',
+    merchantId: 'affordablegolf',
+    network: 'awin',
+    awinAdvertiserId: process.env.AWIN_AFFORDABLEGOLF_ID || null,
+    awinFeedId: process.env.AWIN_AFFORDABLEGOLF_FEED_ID || null,
+  },
+  // Major Golf Direct (advertiserId 83219, approved 6 Aug 2026) is
+  // deliberately NOT listed here — Awin has no product datafeed for this
+  // merchant even once approved, so it can only ever be manually curated
+  // straight into data/deals.json with merchantId "majorgolf". Same for
+  // any other Awin merchant flagged "no datafeed" in README.md.
+
+  // Callaway Golf (19186), Hot Golf UK (76732), Jam Golf (7912), and
+  // Discount Golf Store (10153) are pending Awin approval — add feed
+  // entries here (and matching merchantId rows in data/merchants.json)
+  // once each is approved and a feed ID is issued.
 ];
 
 // Keywords used to decide whether a product is a golf ball at all, and
 // whether it's "premium" (tour-level) or "budget". Extend freely.
 const GOLF_BALL_REGEX = /\bgolf ball/i;
 const PREMIUM_KEYWORDS = /(pro v1|chrome soft|tp5|tour b|z-star|z star|pro plus|avx|staff model|rb tour|tour speed)/i;
+
+// Per-merchant floor: guarantee at least this many premium + this many
+// budget deals per retailer (by discount off RRP), regardless of how
+// they'd rank globally. See applyPerMerchantFloor() in MAIN below.
+const MIN_PER_TIER = 5;
 
 // ----------------------------------------------------------------------
 // 3. AWIN — real, documented integration
@@ -115,12 +154,12 @@ async function fetchFromAwin(retailer) {
     return [];
   }
   const csv = await res.text();
-  return parseAwinCsv(csv, retailer.site);
+  return parseAwinCsv(csv, retailer.site, retailer.merchantId);
 }
 
 // Minimal CSV parser that handles quoted fields — avoids pulling in a
 // dependency for a small, fairly predictable feed format.
-function parseAwinCsv(csv, siteName) {
+function parseAwinCsv(csv, siteName, merchantId) {
   const lines = csv.split(/\r?\n/).filter(Boolean);
   if (lines.length < 2) return [];
   const headers = splitCsvLine(lines[0]);
@@ -147,6 +186,7 @@ function parseAwinCsv(csv, siteName) {
       brand: name.split(' ')[0],
       model: name,
       site: siteName,
+      merchantId,
       tier: PREMIUM_KEYWORDS.test(name) ? 'premium' : 'budget',
       price,
       rrp,
@@ -190,6 +230,36 @@ async function fetchFromFlexOffers(retailer) {
 }
 
 // ----------------------------------------------------------------------
+// 4b. PER-MERCHANT FLOOR — every retailer with feed products gets at
+//     least MIN_PER_TIER premium + MIN_PER_TIER budget deals included,
+//     picked by highest discount within that retailer/tier, regardless
+//     of how they'd stack up against other retailers globally. This is
+//     what makes the list grow rather than stay capped at a fixed size.
+// ----------------------------------------------------------------------
+function applyPerMerchantFloor(allProducts) {
+  const bySite = new Map();
+  for (const p of allProducts) {
+    if (!bySite.has(p.site)) bySite.set(p.site, []);
+    bySite.get(p.site).push(p);
+  }
+
+  const selected = [];
+  for (const [site, products] of bySite) {
+    for (const tier of ['premium', 'budget']) {
+      const tierProducts = products
+        .filter((p) => p.tier === tier)
+        .sort((a, b) => b.discount - a.discount);
+
+      if (tierProducts.length < MIN_PER_TIER) {
+        console.warn(`[floor] ${site}: only ${tierProducts.length} ${tier} deal(s) available — MIN_PER_TIER is ${MIN_PER_TIER}, including all of them.`);
+      }
+      selected.push(...tierProducts.slice(0, MIN_PER_TIER));
+    }
+  }
+  return selected;
+}
+
+// ----------------------------------------------------------------------
 // 5. MAIN
 // ----------------------------------------------------------------------
 async function main() {
@@ -214,19 +284,29 @@ async function main() {
     return;
   }
 
-  const top20 = allProducts
+  // No fixed cap — every retailer's top MIN_PER_TIER premium + MIN_PER_TIER
+  // budget deals are guaranteed a spot. `rank` below is a pure global
+  // discount ordering for display purposes only; it doesn't gate inclusion.
+  const floored = applyPerMerchantFloor(allProducts);
+
+  const deals = floored
     .sort((a, b) => b.discount - a.discount)
-    .slice(0, 20)
     .map((p, i) => ({ rank: i + 1, ...p }));
 
   const output = {
     lastUpdated: new Date().toISOString(),
     isSampleData: false,
-    deals: top20,
+    deals,
   };
 
   await fs.writeFile(OUTPUT_PATH, JSON.stringify(output, null, 2));
-  console.log(`Wrote ${top20.length} deals to ${OUTPUT_PATH}`);
+  console.log(`Wrote ${deals.length} deals to ${OUTPUT_PATH} (no fixed cap — ${bySiteSummary(floored)})`);
+}
+
+function bySiteSummary(deals) {
+  const counts = new Map();
+  for (const d of deals) counts.set(d.site, (counts.get(d.site) || 0) + 1);
+  return [...counts.entries()].map(([site, n]) => `${site}: ${n}`).join(', ');
 }
 
 main().catch((err) => {
